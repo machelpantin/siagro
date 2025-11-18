@@ -1,0 +1,21 @@
+---
+title: "Welcome to Siagro"
+---
+
+## Overview
+
+This is the Siagro visualizer website, featuring test charts and data visualizations.
+
+## Getting Started
+
+Explore the navigation menu to learn more about Siagro and view our charts and visualizations.
+
+## Features
+
+- Interactive data visualizations
+- Chart testing and validation
+- Easy-to-use interface
+
+## About This Site
+
+This website is built with [Quarto](https://quarto.org/) and published using GitHub Pages.

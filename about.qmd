@@ -1,0 +1,27 @@
+---
+title: "About"
+---
+
+## About Siagro
+
+Siagro is a visualization tool designed for testing and displaying charts.
+
+### Purpose
+
+The main purpose of this project is to provide a platform for:
+
+- Testing various chart types
+- Visualizing data effectively
+- Demonstrating data visualization capabilities
+
+### Technology
+
+This website is built using:
+
+- **Quarto**: An open-source scientific and technical publishing system
+- **GitHub Pages**: For hosting and deployment
+- **GitHub Actions**: For automated publishing
+
+### Contact
+
+For more information or questions, please visit our [GitHub repository](https://github.com/machelpantin/siagro).
