@@ -4,6 +4,20 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site"
+    "text": "About this site\nWhat this site is about."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Siagro+",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "Agri_act.html",
+    "href": "Agri_act.html",
+    "title": "Agricultural activities",
+    "section": "",
+    "text": "Content header\nContent content content"
   }
 ]
