@@ -9,7 +9,12 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
-      - Agri_act.qmd
+      - AA.qmd
+      - DR.qmd
+      - SAN.qmd
+      - IC.qmd
+      - CC.qmd
+      - contact.qmd
 
 format:
   html:
