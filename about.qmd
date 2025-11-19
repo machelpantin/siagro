@@ -3,3 +3,5 @@ title: "About"
 ---
 
 About this site
+
+What this site is about.
