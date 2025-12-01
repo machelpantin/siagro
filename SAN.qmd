@@ -1,4 +1,6 @@
 ---
 title: "Food and nutrition security"
+execute:
+  echo: false
 ---
-...
+Food and nutrition security refers to not just the supply of food to a population but is also about ensuring availability, stability and access to food. This section contains data on nutritional conditions, availability, access, acceptability, biological utilization and the structural aspects of food and nutrition security.

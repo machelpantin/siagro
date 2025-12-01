@@ -25,27 +25,34 @@
     "href": "AA.html",
     "title": "Agricultural activities",
     "section": "",
-    "text": "Content header\nContent content content"
+    "text": "Agricultural activity refers to the economic aspects of agriculture and includes data on production, prices, international trade, cultivation and yields, exchange rates, economic activity and public spending.\nContent content content"
   },
   {
     "objectID": "DR.html",
     "href": "DR.html",
     "title": "Rural development",
     "section": "",
-    "text": "…"
+    "text": "Rural development is directly related to agricultural production since people in rural areas often rely more heavily on agriculture. This section includes data on demographics, education, employment and income, housing and public expenditure and investment"
   },
   {
     "objectID": "IC.html",
     "href": "IC.html",
     "title": "Climate data",
     "section": "",
-    "text": "Content header\n…"
+    "text": "Climatic variables impact directly on agricultural production. This section includes annual and monthly data on temperature and precipitation at a national level."
   },
   {
     "objectID": "SAN.html",
     "href": "SAN.html",
     "title": "Food and nutrition security",
     "section": "",
-    "text": "…"
+    "text": "Food and nutrition security refers to not just the supply of food to a population but is also about ensuring availability, stability and access to food. This section contains data on nutritional conditions, availability, access, acceptability, biological utilization and the structural aspects of food and nutrition security."
+  },
+  {
+    "objectID": "CC.html",
+    "href": "CC.html",
+    "title": "Climate change",
+    "section": "",
+    "text": "Climate change can impact on the production potential of all agricultural sectors though the change in both the levels and variability of climate variables. This section includes data on climate variables at a subnational level based on different climate change scenarios."
   }
 ]

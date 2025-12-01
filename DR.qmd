@@ -1,4 +1,127 @@
 ---
 title: "Rural development"
+execute:
+  echo: false
 ---
-...
+Rural development is directly related to agricultural production since people in rural areas often rely more heavily on agriculture. This section includes data on demographics, education, employment and income, housing and public expenditure and investment
+
+
+
+```{python}
+import requests
+import pandas as pd
+import pyecharts
+
+from pyecharts import options as opts
+from pyecharts.charts import Bar, Timeline
+from pyecharts.globals import ThemeType
+
+from utils_siagro import cepal_data #imports from own module
+import logging
+# Set logging level to WARNING to reduce output noise
+logging.getLogger().setLevel(logging.WARNING)
+
+df = cepal_data([4041], lang='es')
+
+# Assuming df is your pandas DataFrame with:
+# - 'País__ESTANDAR': country names
+# - 'value': unemployment rates
+# - 'Área geográfica': geographic areas
+# - 'Años__ESTANDAR': years
+
+# Get unique, sorted values
+years = sorted(df['Años__ESTANDAR'].unique())
+countries = df['País__ESTANDAR'].unique()
+areas = df['Área geográfica'].unique()
+
+# Create a timeline to handle year selection
+timeline = Timeline(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
+timeline.add_schema(
+    pos_left="center",
+    pos_bottom="-1%",
+    play_interval=0,  # Set to 0 to disable auto-play
+    is_auto_play=False,
+    is_loop_play=False,
+    is_timeline_show=True,
+    label_opts=opts.LabelOpts(is_show=True, color="#333"),
+)
+
+# For each year, create a bar chart
+for year in years:
+    # Filter data for the current year
+    year_data = df[df['Años__ESTANDAR'] == year]
+    
+    # Create a new bar chart for this year
+    bar = Bar()
+    
+    # Configure the bar chart
+    bar.add_xaxis(list(countries))
+    
+    # Add a bar series for each geographic area
+    for area in areas:
+        area_data = year_data[year_data['Área geográfica'] == area]
+        
+        # Create a mapping of countries to values
+        area_values = {}
+        for _, row in area_data.iterrows():
+            area_values[row['País__ESTANDAR']] = row['value']
+        
+        # For each country, get the value or 0 if not present
+        values = [area_values.get(country, 0) for country in countries]
+        
+        # Add the series
+        bar.add_yaxis(
+            series_name=str(area),
+            y_axis=values,
+            label_opts=opts.LabelOpts(is_show=False),
+            category_gap="30%",  # Controls the gap between clustered bars
+            gap="30%"            # Controls the gap within clusters
+        )
+    
+    # Configure the chart options
+    bar.set_global_opts(
+        title_opts=opts.TitleOpts(
+            title=f"Tasa de desempleo según área geográfica - {year}",
+            subtitle="Porcentajes",
+            # Add padding to title to ensure space for legend
+            padding=[0, 0, 20, 0]  # [top, right, bottom, left]
+        ),
+        tooltip_opts=opts.TooltipOpts(trigger="axis", axis_pointer_type="shadow"),
+        legend_opts=opts.LegendOpts(
+            type_="scroll", 
+            # Move the legend to the right side
+            pos_right="0%",
+            pos_top="middle",
+            orient="vertical",
+            # Alternative: place it at the bottom
+            #pos_bottom="0%",
+            #pos_left="center",
+            #orient="horizontal",
+        ),
+        xaxis_opts=opts.AxisOpts(
+            name="País",
+            axislabel_opts=opts.LabelOpts(rotate=30, font_size=10),
+            # Sort countries by total value descending
+            axistick_opts=opts.AxisTickOpts(is_align_with_label=True)
+        ),
+        yaxis_opts=opts.AxisOpts(
+            name="Tasa de desempleo (en porcentaje)",
+            name_location="middle",
+            name_gap=40
+        )
+    )
+    
+    # Add the configured bar chart to the timeline
+    timeline.add(bar, f"{year}")
+
+# Render the chart
+timeline.render("unemployment_rate_by_area.html")
+
+# If you want to display in a notebook
+# from pyecharts.render import make_snapshot
+# from snapshot_selenium import snapshot
+# make_snapshot(snapshot, timeline.render(), "unemployment_rate.png")
+
+# For Jupyter notebook display, you can use:
+timeline.render_notebook()
+```

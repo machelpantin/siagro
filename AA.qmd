@@ -1,7 +1,9 @@
 ---
 title: "Agricultural activities"
+execute:
+  echo: false
 ---
 
-# Content header
+Agricultural activity refers to the economic aspects of agriculture and includes data on production, prices, international trade, cultivation and yields, exchange rates, economic activity and public spending.
 
 Content content content

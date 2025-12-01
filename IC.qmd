@@ -1,5 +1,6 @@
 ---
 title: "Climate data"
+execute:
+  echo: false
 ---
-# Content header
-...
+Climatic variables impact directly on agricultural production. This section includes annual and monthly data on temperature and precipitation at a national level.

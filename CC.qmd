@@ -1,4 +1,6 @@
 ---
 title: "Climate change"
+execute:
+  echo: false
 ---
-...
+Climate change can impact on the production potential of all agricultural sectors though the change in both the levels and variability of climate variables. This section includes data on climate variables at a subnational level based on different climate change scenarios.
