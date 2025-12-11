@@ -4,3 +4,135 @@ execute:
   echo: false
 ---
 Climatic variables impact directly on agricultural production. This section includes annual and monthly data on temperature and precipitation at a national level.
+
+```{python}
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+import pyecharts
+
+from utils_siagro import cepal_data #imports from own module
+import logging
+# Set logging level to WARNING to reduce output noise
+logging.getLogger().setLevel(logging.WARNING)
+```
+```{python}
+df = cepal_data([3472, 3475], lang='es')
+```
+
+```{python}
+atmp = df[df['indicator_id'] == 3472].copy()
+atmp = atmp[df['dim_208'] == 233]
+atmp = atmp[atmp['dim_68102'] == 68104]
+
+atmp['value'] = pd.to_numeric(atmp['value'], errors='coerce')
+atmp['year'] = pd.to_numeric(atmp['Años__ESTANDAR'], errors='coerce')
+atmp = atmp.dropna(subset=['year'])
+atmp = atmp.sort_values('year')
+
+# 1) baseline average for 1960-1990 (single value applied to all rows)
+mask_baseline = (atmp['year'] >= 1960) & (atmp['year'] <= 1990)
+baseline = atmp.loc[mask_baseline, 'value'].mean()
+atmp['avg_1960_1990'] = baseline
+
+# 2) ten-year interval averages starting in 1901 (decade_start = 1901, 1911, ...)
+atmp['decade_start'] = (((atmp['year'] - 1901) // 10) * 10 + 1901).astype(int)
+# compute per-decade stats (min/max year present and mean)
+decade_stats = (atmp
+                .groupby('decade_start', as_index=False)
+                .agg(year_min=('year', 'min'),
+                     year_max=('year', 'max'),
+                     avg_10yr=('value', 'mean')))
+
+# bring decade mean back to rows (optional)
+atmp = atmp.merge(decade_stats[['decade_start','avg_10yr']], on='decade_start', how='left')
+
+# 3) Differences relative to baseline
+atmp['temp-diff'] = atmp['value'] - atmp['avg_1960_1990']
+atmp['temp_diff_10yr'] = atmp['avg_10yr'] - atmp['avg_1960_1990']
+
+```
+
+```{python}
+from pyecharts.charts import Scatter, Line
+from pyecharts import options as opts
+from pyecharts.commons.utils import JsCode
+
+matplotlib_c0 = "#1f77b4"
+matplotlib_c1 = "#ff7f0e"
+
+# DATA
+xaxis = atmp['year'].astype(int).tolist()
+yvals = atmp['temp-diff'].tolist()
+
+# Axis formatter: show integers
+int_formatter = JsCode("function (value) { return Math.round(value).toString(); }")
+
+# --- BASE SCATTER ---
+chart = Scatter(init_opts=opts.InitOpts(width="800px", height="600px"))
+chart.add_xaxis(xaxis)
+chart.add_yaxis(
+    "Anomalía anual",
+    yvals,
+    symbol="circle",
+    symbol_size=7,
+    itemstyle_opts=opts.ItemStyleOpts(
+        color=matplotlib_c0,
+        border_color="#000000",
+        border_width=1,
+        opacity=0.9,
+    ),
+    label_opts=opts.LabelOpts(is_show=False),
+)
+
+# --- DECADE HORIZONTAL LINES ---
+decade_stats = decade_stats.sort_values("decade_start")
+
+for r in decade_stats.itertuples():
+    xmin, xmax = int(r.year_min), int(r.year_max)
+    y = r.avg_10yr - baseline   # still subtract baseline for anomaly
+
+    line = Line()
+    line.add_xaxis([xmin, xmax])
+    line.add_yaxis(
+        series_name="Temperatura promedia por decada", 
+        y_axis=[y, y],
+        is_connect_nones=True,
+        symbol="none",
+        label_opts=opts.LabelOpts(is_show=False),
+        linestyle_opts=opts.LineStyleOpts(
+            color=matplotlib_c1,
+            width=3,
+            opacity=0.8,
+        ),
+    )
+    chart.overlap(line)
+
+# --- GLOBAL OPTIONS ---
+chart.set_global_opts(
+    title_opts=opts.TitleOpts(title="Temperatura anual promedio (°C)"),
+    xaxis_opts=opts.AxisOpts(
+        name="Año",
+        type_="value",
+        min_=1900,
+        max_=2025,
+        name_location="middle",
+        name_gap=35,
+        axislabel_opts=opts.LabelOpts(formatter=int_formatter),
+        splitline_opts=opts.SplitLineOpts(is_show=False),
+    ),
+    yaxis_opts=opts.AxisOpts(
+        name="Temperatura (°C)",
+        name_location="middle",
+        name_gap=30,  # ← increases distance between label and tick labels
+    ),
+    tooltip_opts=opts.TooltipOpts(trigger="item"),
+    legend_opts=opts.LegendOpts(pos_top="5%"),   # only "Anomalía anual" shows
+    toolbox_opts=opts.ToolboxOpts(),
+)
+
+chart.render_notebook()
+
+```
