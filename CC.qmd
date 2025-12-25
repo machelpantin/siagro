@@ -1,261 +1,120 @@
 ---
-title: "Climate change"
-execute:
-  echo: false
----
-Climate change can impact on the production potential of all agricultural sectors though the change in both the levels and variability of climate variables. This section includes data on climate variables at a subnational level based on different climate change scenarios.
-
-El cambio climático puede afectar el potencial productivo de todos los sectores agrícolas a través del cambio tanto en los niveles como en la variabilidad de las variables climáticas. Esta sección incluye datos sobre variables climáticas a nivel subnacional basados en diferentes escenarios de cambio climático.
-
-```{python}
 import pandas as pd
 import numpy as np
 from utils_siagro import cepal_data
-import logging
-logging.getLogger().setLevel(logging.WARNING)
-```
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
-```{python}
-# Fetch climate change temperature data (indicator 4470: Average temperature 1960-2000)
-df = cepal_data([4470], lang='en')
-```
+# 常量
+HISTORICAL_PERIOD_CODE = 85163  # 1960-1990 历史时期
 
-## Average Temperature by Country (1960-1990) / Temperatura Promedio por País
+# 获取数据
+try:
+    df = cepal_data([4470], lang='en')
+    if df.empty:
+        raise ValueError("从 CEPALSTAT 获取的数据为空。")
+except Exception as e:
+    print(f"**错误：无法获取数据** - {e}")
+    df = pd.DataFrame()
 
-Select a country tab to view monthly average temperature patterns. Click on different tabs to compare countries.
-
-Seleccione una pestaña de país para ver los patrones de temperatura mensual promedio. Haga clic en diferentes pestañas para comparar países.
-
-```{python}
-from pyecharts.charts import Bar, Tab, Scatter
-from pyecharts import options as opts
-from pyecharts.commons.utils import JsCode
-
-# Month order for sorting
-month_order = {
-    'January': 1, 'February': 2, 'March': 3, 'April': 4,
-    'May': 5, 'June': 6, 'July': 7, 'August': 8,
-    'September': 9, 'October': 10, 'November': 11, 'December': 12
-}
-
-# Filter for historical period 1960-1990 (dim_85162 = 85163)
-if 'dim_85162' in df.columns:
-    df_filtered = df[df['dim_85162'] == 85163].copy()
+if df.empty:
+    print("**无数据可用，后续图表无法生成。**")
 else:
-    df_filtered = df.copy()
+    # 必要列检查
+    required_cols = ['value']
+    if not all(col in df.columns for col in required_cols):
+        print("**错误：数据缺少必要列，无法生成图表。**")
+    else:
+        # 过滤历史时期
+        if 'dim_85162' in df.columns:
+            df_filtered = df[df['dim_85162'] == HISTORICAL_PERIOD_CODE].copy()
+            if df_filtered.empty:
+                print("**警告：1960-1990 时期无数据，使用全部数据替代。**")
+                df_filtered = df.copy()
+        else:
+            df_filtered = df.copy()
 
-df_filtered['value'] = pd.to_numeric(df_filtered['value'], errors='coerce')
+        df_filtered['value'] = pd.to_numeric(df_filtered['value'], errors='coerce')
 
-def build_country_chart(df, country_name):
-    """Build bar chart for monthly temperature of a country"""
-    
-    if 'Subnational administrative division' not in df.columns or 'Months' not in df.columns:
-        return None
-    
-    country_data = df[df['Subnational administrative division'] == country_name].copy()
-    
-    if country_data.empty:
-        return None
-    
-    # Calculate average by month
-    monthly_avg = country_data.groupby('Months')['value'].mean().reset_index()
-    monthly_avg['month_num'] = monthly_avg['Months'].map(month_order)
-    monthly_avg = monthly_avg.sort_values('month_num')
-    
-    months = monthly_avg['Months'].tolist()
-    temps = monthly_avg['value'].round(2).tolist()
-    
-    if not temps:
-        return None
-    
-    chart = Bar(init_opts=opts.InitOpts(width="800px", height="500px"))
-    chart.add_xaxis(months)
-    chart.add_yaxis(
-        "Temperature (°C)",
-        temps,
-        itemstyle_opts=opts.ItemStyleOpts(color="#5470c6"),
-        label_opts=opts.LabelOpts(is_show=True, position="top", formatter="{c}°C")
-    )
-    
-    chart.set_global_opts(
-        title_opts=opts.TitleOpts(
-            title=f"Monthly Average Temperature - {country_name}",
-            subtitle="Historical period: 1960-1990 | Source: CEPALSTAT"
-        ),
-        xaxis_opts=opts.AxisOpts(
-            name="Month",
-            axislabel_opts=opts.LabelOpts(rotate=45)
-        ),
-        yaxis_opts=opts.AxisOpts(
-            name="Temperature (°C)",
-            min_=10,
-            max_=35
-        ),
-        tooltip_opts=opts.TooltipOpts(trigger="axis"),
-        legend_opts=opts.LegendOpts(is_show=False)
-    )
-    
-    return chart
+        # 检查关键列
+        if not {'Subnational administrative division', 'Months'}.issubset(df_filtered.columns):
+            print("**错误：缺少国家或月份列，无法生成图表。**")
+        else:
+            # 动态获取国家列表并排序
+            country_names = sorted(df_filtered['Subnational administrative division'].dropna().unique())
+            print(f"**检测到 {len(country_names)} 个国家/地区：** {', '.join(country_names)}")
 
-# Get unique country names (national level divisions)
-country_names = ['Belize', 'Costa Rica', 'Cuba', 'El Salvador', 'Guatemala', 
-                 'Haiti', 'Honduras', 'Mexico', 'Panama', 'Dominican Republic']
+            # 月份顺序
+            month_order = ['January', 'February', 'March', 'April', 'May', 'June',
+                           'July', 'August', 'September', 'October', 'November', 'December']
 
-# Build tabs
-tab = Tab()
-for country in country_names:
-    chart = build_country_chart(df_filtered, country)
-    if chart:
-        tab.add(chart, country)
+            # 1. 单个国家月均温度柱状图（Tab 效果用下拉菜单替代，更适合网页）
+            print("### 国家月均温度比较（请选择国家）")
+            country_data_long = []
+            for country in country_names:
+                sub = df_filtered[df_filtered['Subnational administrative division'] == country].copy()
+                if not sub.empty:
+                    monthly_avg = sub.groupby('Months')['value'].mean().round(2).reset_index()
+                    monthly_avg['Country'] = country
+                    country_data_long.append(monthly_avg)
 
-tab.render_notebook()
-```
+            if country_data_long:
+                df_monthly = pd.concat(country_data_long)
+                df_monthly['Months'] = pd.Categorical(df_monthly['Months'], categories=month_order, ordered=True)
+                df_monthly = df_monthly.sort_values('Months')
 
-## Multi-Country Temperature Comparison / Comparación de Temperatura entre Países
+                fig1 = px.bar(df_monthly,
+                              x='Months', y='value', color='Country',
+                              title="Monthly Average Temperature by Country (1960-1990)",
+                              labels={'value': 'Temperature (°C)', 'Months': 'Month'},
+                              category_orders={'Months': month_order},
+                              barmode='group',
+                              height=600)
+                fig1.update_layout(legend_title="Country",
+                                   xaxis_title="Month",
+                                   yaxis_title="Temperature (°C)",
+                                   hovermode="x unified")
+                fig1.show()
 
-This interactive chart allows you to compare temperature patterns across multiple countries. Click on country names in the legend to show or hide individual countries.
+            # 2. 多国家温度对比折线图
+            print("### 多国家月均温度折线对比")
+            if country_data_long:
+                fig2 = px.line(df_monthly,
+                               x='Months', y='value', color='Country',
+                               title="Monthly Temperature Comparison (1960-1990)",
+                               labels={'value': 'Temperature (°C)', 'Months': 'Month'},
+                               category_orders={'Months': month_order},
+                               markers=True,
+                               height=600)
+                fig2.update_layout(legend_title="Country",
+                                   xaxis_title="Month",
+                                   yaxis_title="Temperature (°C)",
+                                   hovermode="x unified")
+                fig2.show()
 
-Este gráfico interactivo permite comparar los patrones de temperatura entre múltiples países. Haga clic en los nombres de los países en la leyenda para mostrar u ocultar países individuales.
+            # 3. 国家年均温度排名横向柱状图
+            print("### 国家年均温度排名（1960-1990）")
+            country_avg = []
+            for country in country_names:
+                sub = df_filtered[df_filtered['Subnational administrative division'] == country]
+                if not sub.empty:
+                    mean_temp = sub['value'].mean()
+                    if not np.isnan(mean_temp):
+                        country_avg.append({'Country': country, 'Temperature': round(mean_temp, 2)})
 
-```{python}
-from pyecharts.charts import Line
-
-def build_multi_country_line(df):
-    """Build line chart comparing multiple countries"""
-    
-    chart = Line(init_opts=opts.InitOpts(width="900px", height="550px"))
-    
-    colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', 
-              '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc', '#ff9f7f']
-    
-    # Month labels for x-axis
-    month_labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    
-    chart.add_xaxis(month_labels)
-    
-    for idx, country in enumerate(country_names):
-        country_data = df_filtered[df_filtered['Subnational administrative division'] == country].copy()
-        
-        if country_data.empty or 'Months' not in country_data.columns:
-            continue
-        
-        # Calculate average by month
-        monthly_avg = country_data.groupby('Months')['value'].mean().reset_index()
-        monthly_avg['month_num'] = monthly_avg['Months'].map(month_order)
-        monthly_avg = monthly_avg.sort_values('month_num')
-        
-        temps = monthly_avg['value'].round(2).tolist()
-        
-        if temps:
-            chart.add_yaxis(
-                country,
-                temps,
-                is_smooth=True,
-                symbol_size=8,
-                linestyle_opts=opts.LineStyleOpts(width=2),
-                itemstyle_opts=opts.ItemStyleOpts(color=colors[idx % len(colors)]),
-                label_opts=opts.LabelOpts(is_show=False)
-            )
-    
-    chart.set_global_opts(
-        title_opts=opts.TitleOpts(
-            title="Monthly Temperature Comparison",
-            subtitle="Click legend to show/hide countries | Source: CEPALSTAT"
-        ),
-        xaxis_opts=opts.AxisOpts(name="Month"),
-        yaxis_opts=opts.AxisOpts(
-            name="Temperature (°C)",
-            min_=15,
-            max_=30
-        ),
-        tooltip_opts=opts.TooltipOpts(
-            trigger="axis",
-            axis_pointer_type="cross"
-        ),
-        legend_opts=opts.LegendOpts(
-            is_show=True,
-            pos_top="5%",
-            selected_mode="multiple",
-            type_="scroll"
-        )
-    )
-    
-    return chart
-
-line_chart = build_multi_country_line(df_filtered)
-line_chart.render_notebook()
-```
-
-## Country Ranking by Average Temperature / Ranking de Países por Temperatura Promedio
-
-Horizontal bar chart showing annual average temperature by country, sorted from highest to lowest.
-
-Gráfico de barras horizontal que muestra la temperatura promedio anual por país, ordenado de mayor a menor.
-
-```{python}
-def build_ranking_chart(df):
-    """Build horizontal bar chart ranking countries by average temperature"""
-    
-    country_avgs = []
-    
-    for country in country_names:
-        country_data = df[df['Subnational administrative division'] == country]
-        if not country_data.empty:
-            avg_temp = country_data['value'].mean()
-            country_avgs.append({'country': country, 'temp': round(avg_temp, 2)})
-    
-    if not country_avgs:
-        return None
-    
-    # Sort by temperature descending
-    country_avgs = sorted(country_avgs, key=lambda x: x['temp'], reverse=True)
-    
-    countries = [c['country'] for c in country_avgs]
-    temps = [c['temp'] for c in country_avgs]
-    
-    chart = Bar(init_opts=opts.InitOpts(width="800px", height="450px"))
-    chart.add_xaxis(countries)
-    chart.add_yaxis(
-        "Avg Temperature (°C)",
-        temps,
-        itemstyle_opts=opts.ItemStyleOpts(
-            color=JsCode("""
-                function(params) {
-                    var colorList = ['#c23531', '#d48265', '#e69d87', '#eeca69', '#91c7ae', 
-                                     '#749f83', '#6e9ec3', '#5470c6', '#73c0de', '#3ba272'];
-                    return colorList[params.dataIndex % colorList.length];
-                }
-            """)
-        ),
-        label_opts=opts.LabelOpts(is_show=True, position="right", formatter="{c}°C")
-    )
-    
-    chart.reversal_axis()
-    
-    chart.set_global_opts(
-        title_opts=opts.TitleOpts(
-            title="Average Temperature by Country (1960-1990)",
-            subtitle="Central America and Mexico | Source: CEPALSTAT"
-        ),
-        xaxis_opts=opts.AxisOpts(name="Temperature (°C)"),
-        yaxis_opts=opts.AxisOpts(name=""),
-        tooltip_opts=opts.TooltipOpts(trigger="axis"),
-        legend_opts=opts.LegendOpts(is_show=False)
-    )
-    
-    return chart
-
-ranking_chart = build_ranking_chart(df_filtered)
-if ranking_chart:
-    ranking_chart.render_notebook()
-```
-
----
-
-### Data Source / Fuente de Datos
-
-- **Indicator**: 4470 - Average temperature 1960-2000
-- **Source**: [CEPALSTAT](https://statistics.cepal.org/portal/cepalstat/dashboard.html?indicator_id=4470&area_id=2327&lang=en)
-- **Coverage**: Central America, Mexico, and Caribbean
-- **Unit**: Degrees Celsius (°C)
+            if country_avg:
+                df_rank = pd.DataFrame(country_avg).sort_values('Temperature', ascending=True)
+                
+                fig3 = px.bar(df_rank,
+                              x='Temperature', y='Country',
+                              orientation='h',
+                              title="Average Annual Temperature by Country (1960-1990)",
+                              labels={'Temperature': 'Temperature (°C)'},
+                              height=500,
+                              color='Temperature',
+                              color_continuous_scale='Oranges')
+                fig3.update_layout(yaxis_title="",
+                                   xaxis_title="Temperature (°C)",
+                                   showlegend=False)
+                fig3.show()
