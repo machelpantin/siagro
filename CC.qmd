@@ -1,12 +1,14 @@
 ---
-title: "Climate data"
+title: "Climate Data Analysis"
 execute:
   echo: false
 ---
 
-Climatic variables impact directly on agricultural production.
+Climatic variables impact directly on agricultural production. This section provides a comparative analysis of monthly and annual average temperatures (1960-1990).
 
 ::: {.panel-tabset}
+
+## 📊 Monthly Details by Country
 
 ```{python}
 #| warning: false
@@ -16,61 +18,60 @@ Climatic variables impact directly on agricultural production.
 import pandas as pd
 import numpy as np
 import requests
-from pyecharts.charts import Scatter, Line
+from pyecharts.charts import Bar
 from pyecharts import options as opts
-from IPython.display import HTML
+from IPython.display import HTML, display
 
-# 1. 核心配置：禁用 pyecharts 的 requirejs 自动探测，强制使用全量加载
+# 1. 核心配置：解决 GitHub Pages HTTPS 环境下的加载问题
 from pyecharts.globals import CurrentConfig
 CurrentConfig.ONLINE_HOST = "[https://assets.pyecharts.org/assets/v5/](https://assets.pyecharts.org/assets/v5/)"
 
-# 2. 获取数据
-def fetch_data(indicator_id):
-    url = f"[https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/](https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/){indicator_id}/data/en"
+# 2. 数据获取
+def get_data():
+    url = "[https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/4470/data/en](https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/4470/data/en)"
     try:
         r = requests.get(url, timeout=30)
-        return pd.DataFrame(r.json()['body']['data'])
+        df = pd.DataFrame(r.json()['body']['data'])
+        df['value'] = pd.to_numeric(df['value'], errors='coerce')
+        return df
     except:
         return pd.DataFrame()
 
-df = fetch_data(4470)
+df = get_data()
 
-# 3. 绘图函数
-def render_country_chart(df, pais):
-    sub = df[df['dim_name_1'] == pais].copy()
-    sub["value"] = pd.to_numeric(sub["value"], errors="coerce")
-    sub["year"] = pd.to_numeric(sub["dim_name_3"], errors="coerce")
-    sub = sub.dropna(subset=["year", "value"]).sort_values("year")
+# 月份排序顺序
+month_order = ['January', 'February', 'March', 'April', 'May', 'June',
+               'July', 'August', 'September', 'October', 'November', 'December']
 
-    if sub.empty: return
-
-    # 计算距平
-    mask = (sub["year"] >= 1960) & (sub["year"] <= 1990)
-    baseline = sub.loc[mask, "value"].mean() or sub["value"].mean()
-    sub["diff"] = sub["value"] - baseline
-
-    # 绘图
-    chart = Scatter(init_opts=opts.InitOpts(width="100%", height="500px"))
-    chart.add_xaxis(sub["year"].tolist())
-    chart.add_yaxis("Anomaly", sub["diff"].round(3).tolist(), symbol_size=8)
-    
-    chart.set_global_opts(
-        title_opts=opts.TitleOpts(title=f"Temp Anomaly: {pais}"),
-        xaxis_opts=opts.AxisOpts(type_="value", splitline_opts=opts.SplitLineOpts(is_show=False)),
-        yaxis_opts=opts.AxisOpts(name="°C"),
-        datazoom_opts=[opts.DataZoomOpts()]
-    )
-    
-    # 关键点：使用 Quarto 语法生成选项卡标题
-    print(f'## {pais}')
-    # 输出图表的 HTML 源码
-    print(chart.render_embed())
-
-# 4. 执行循环渲染
 if not df.empty:
-    countries = sorted(df['dim_name_1'].unique())
-    # 限制前几个国家测试，如果成功再扩展
-    for c in countries:
-        render_country_chart(df, c)
+    # 筛选 1960-1990 时期 (对应代码 85163)
+    target_period = "85163"
+    df_filtered = df[df['dim_85162'] == target_period].copy()
+    if df_filtered.empty:
+        df_filtered = df.copy()
+
+    # 获取地区列表并循环渲染
+    target_col = 'Subnational administrative division'
+    locations = sorted(df_filtered[target_col].unique())
+
+    for loc in locations:
+        sub = df_filtered[df_filtered[target_col] == loc].copy()
+        # 聚合每个月的数据
+        monthly_avg = sub.groupby('Months')['value'].mean().reindex(month_order).reset_index()
+        
+        # 绘制柱状图
+        bar = Bar(init_opts=opts.InitOpts(width="100%", height="450px"))
+        bar.add_xaxis(month_order)
+        bar.add_yaxis("Avg Temperature", monthly_avg['value'].round(2).tolist(), color="#1f77b4")
+        bar.set_global_opts(
+            title_opts=opts.TitleOpts(title=f"Monthly Average Temp - {loc}"),
+            yaxis_opts=opts.AxisOpts(name="Temperature (°C)"),
+            tooltip_opts=opts.TooltipOpts(trigger="axis")
+        )
+        
+        # --- 关键：使用 Quarto 语法生成子选项卡标题 ---
+        print(f'### {loc}')
+        # 输出图表嵌入代码
+        print(bar.render_embed())
 else:
-    print("Error: No data")
+    print("Error: Could not retrieve data from API.")
