@@ -1,100 +1,82 @@
-import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
 from utils_siagro import cepal_data
+from pyecharts.charts import Scatter, Line, Tab
+from pyecharts import options as opts
+from pyecharts.commons.utils import JsCode
 
-# 页面配置
-st.set_page_config(page_title="CEPAL 温度数据可视化", layout="wide")
-
-# 常量
-HISTORICAL_PERIOD_CODE = 85163  # 1960-1990 历史时期
-
-st.title("🌡️ 拉美地区历史月均温度分析")
-st.markdown("数据来源：CEPALSTAT (1960-1990)")
-
-# 获取数据并缓存以提高网页加载速度
-@st.cache_data
-def load_data():
+# --- 1. 数据获取 ---
+def get_processed_data():
     try:
+        # 使用你原本的指标 ID: 4470 (或根据需求改为 3472)
         df = cepal_data([4470], lang='en')
         if df.empty:
-            return None, "从 CEPALSTAT 获取的数据为空。"
-        return df, None
-    except Exception as e:
-        return None, str(e)
-
-df, error = load_data()
-
-if error:
-    st.error(f"无法获取数据: {error}")
-elif df is not None:
-    # 1. 数据预处理
-    if 'dim_85162' in df.columns:
-        df_filtered = df[df['dim_85162'] == HISTORICAL_PERIOD_CODE].copy()
-        if df_filtered.empty:
-            st.warning("1960-1990 时期无数据，已切换为全部数据。")
-            df_filtered = df.copy()
-    else:
-        df_filtered = df.copy()
-
-    df_filtered['value'] = pd.to_numeric(df_filtered['value'], errors='coerce')
-    
-    # 检查列名
-    target_col = 'Subnational administrative division'
-    if target_col not in df_filtered.columns or 'Months' not in df_filtered.columns:
-        st.error("数据缺少必要列（国家或月份）。")
-    else:
-        # 月份排序逻辑
-        month_order = ['January', 'February', 'March', 'April', 'May', 'June',
-                       'July', 'August', 'September', 'October', 'November', 'December']
+            return None
         
-        # 侧边栏：交互控件
-        st.sidebar.header("筛选器")
-        all_countries = sorted(df_filtered[target_col].dropna().unique())
-        selected_countries = st.sidebar.multiselect(
-            "选择要对比的国家/地区",
-            options=all_countries,
-            default=all_countries[:3] if len(all_countries) > 3 else all_countries
+        # 转换数值
+        df['value'] = pd.to_numeric(df['value'], errors='coerce')
+        # 这里的 Años__ESTANDAR 或 Years 根据你实际 API 返回的列名调整
+        # 假设列名为 'Years'
+        year_col = 'Years' if 'Years' in df.columns else 'Años__ESTANDAR'
+        df['year'] = pd.to_numeric(df[year_col], errors='coerce')
+        
+        return df.dropna(subset=['value', 'year'])
+    except Exception as e:
+        print(f"Error fetching data: {e}")
+        return None
+
+# --- 2. 构建单个国家图表的函数 ---
+def build_country_chart(df, country_name):
+    # 过滤特定国家数据
+    # 注意：列名请确保与 API 返回一致，这里使用你之前的 'Subnational administrative division'
+    country_col = 'Subnational administrative division'
+    sub = df[df[country_col] == country_name].copy().sort_values("year")
+
+    # 计算 1960-1990 基准线 (Baseline)
+    mask = (sub["year"] >= 1960) & (sub["year"] <= 1990)
+    baseline = sub.loc[mask, "value"].mean()
+    
+    # 如果基准线为空（该国家在此时段无数据），则用全局平均
+    if np.isnan(baseline):
+        baseline = sub["value"].mean()
+    
+    sub["temp_diff"] = sub["value"] - baseline
+
+    # 计算年代平均值 (Decade Stats)
+    sub["decade"] = (sub["year"] // 10) * 10
+    decade_stats = sub.groupby("decade").agg(
+        year_min=("year", "min"),
+        year_max=("year", "max"),
+        avg_val=("value", "mean")
+    ).reset_index()
+
+    # --- 绘图 ---
+    # 1. 散点图：年度异常值
+    scatter = Scatter(init_opts=opts.InitOpts(width="800px", height="500px"))
+    scatter.add_xaxis(sub["year"].tolist())
+    scatter.add_yaxis(
+        "Annual Anomaly",
+        sub["temp_diff"].round(3).tolist(),
+        symbol_size=8,
+        itemstyle_opts=opts.ItemStyleOpts(color="#1f77b4", opacity=0.8),
+        label_opts=opts.LabelOpts(is_show=False),
+    )
+
+    # 2. 折线图：年代平均值（层叠在散点图上）
+    for r in decade_stats.itertuples():
+        line = Line()
+        y_anomaly = r.avg_val - baseline
+        line.add_xaxis([int(r.year_min), int(r.year_max)])
+        line.add_yaxis(
+            "Decadal Average",
+            [round(y_anomaly, 3), round(y_anomaly, 3)],
+            symbol="none",
+            is_connect_nones=True,
+            linestyle_opts=opts.LineStyleOpts(color="#ff7f0e", width=3),
+            label_opts=opts.LabelOpts(is_show=False),
         )
+        scatter.overlap(line)
 
-        # 过滤用户选择的数据
-        df_plot = df_filtered[df_filtered[target_col].isin(selected_countries)].copy()
-
-        if not df_plot.empty:
-            # 准备绘图数据
-            df_monthly = df_plot.groupby([target_col, 'Months'])['value'].mean().round(2).reset_index()
-            df_monthly['Months'] = pd.Categorical(df_monthly['Months'], categories=month_order, ordered=True)
-            df_monthly = df_monthly.sort_values('Months')
-
-            # --- 图表展示 ---
-            col1, col2 = st.columns(2)
-
-            with col1:
-                st.subheader("📊 月均温度柱状图")
-                fig1 = px.bar(df_monthly, x='Months', y='value', color=target_col,
-                             title="Monthly Average Temp (1960-1990)",
-                             barmode='group', height=500)
-                st.plotly_chart(fig1, use_container_width=True)
-
-            with col2:
-                st.subheader("📈 温度变化趋势")
-                fig2 = px.line(df_monthly, x='Months', y='value', color=target_col,
-                              title="Temperature Comparison Trend",
-                              markers=True, height=500)
-                st.plotly_chart(fig2, use_container_width=True)
-
-            st.divider()
-
-            # 排名图表
-            st.subheader("🏆 国家年均温度排名")
-            df_rank = df_plot.groupby(target_col)['value'].mean().round(2).reset_index()
-            df_rank = df_rank.sort_values('value', ascending=True)
-            
-            fig3 = px.bar(df_rank, x='value', y=target_col, orientation='h',
-                         color='value', color_continuous_scale='Oranges',
-                         labels={'value': 'Temperature (°C)', target_col: ''},
-                         height=400)
-            st.plotly_chart(fig3, use_container_width=True)
-        else:
-            st.info("请在侧边栏选择至少一个国家进行查看。")
+    # 全局配置
+    scatter.set_global_opts(
+        title_opts=opts.TitleOpts(title=
