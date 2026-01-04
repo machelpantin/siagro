@@ -1,106 +1,76 @@
-
+---
 title: "Climate data"
 execute:
   echo: false
-Climatic variables impact directly on agricultural production. This section includes annual and monthly data on temperature and precipitation at a national level.
+---
 
-Las variables climáticas inciden directamente en la producción agrícola. Esta sección incluye datos anuales y mensuales de temperatura y precipitación a nivel nacional.
+Climatic variables impact directly on agricultural production.
+
+::: {.panel-tabset}
 
 ```{python}
 #| warning: false
 #| message: false
+#| results: asis
 
 import pandas as pd
 import numpy as np
 import requests
-from pyecharts.charts import Scatter, Line, Tab
+from pyecharts.charts import Scatter, Line
 from pyecharts import options as opts
-from IPython.display import HTML, display
+from IPython.display import HTML
 
-# 1. 修正 CDN 地址 (确保没有 Markdown 括号)
+# 1. 核心配置：禁用 pyecharts 的 requirejs 自动探测，强制使用全量加载
 from pyecharts.globals import CurrentConfig
 CurrentConfig.ONLINE_HOST = "[https://assets.pyecharts.org/assets/v5/](https://assets.pyecharts.org/assets/v5/)"
 
-# 2. 数据获取函数
+# 2. 获取数据
 def fetch_data(indicator_id):
     url = f"[https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/](https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/){indicator_id}/data/en"
     try:
         r = requests.get(url, timeout=30)
-        r.raise_for_status()
-        json_data = r.json()
-        return pd.DataFrame(json_data['body']['data'])
-    except Exception as e:
-        # 如果报错，在页面显示具体错误原因
+        return pd.DataFrame(r.json()['body']['data'])
+    except:
         return pd.DataFrame()
 
-# 获取数据
 df = fetch_data(4470)
 
 # 3. 绘图函数
-def build_chart(df, pais):
-    # 根据 CEPAL API 标准字段筛选
-    atmp = df[df['dim_name_1'] == pais].copy()
-    
-    atmp["value"] = pd.to_numeric(atmp["value"], errors="coerce")
-    atmp["year"] = pd.to_numeric(atmp["dim_name_3"], errors="coerce")
-    atmp = atmp.dropna(subset=["year", "value"]).sort_values("year")
+def render_country_chart(df, pais):
+    sub = df[df['dim_name_1'] == pais].copy()
+    sub["value"] = pd.to_numeric(sub["value"], errors="coerce")
+    sub["year"] = pd.to_numeric(sub["dim_name_3"], errors="coerce")
+    sub = sub.dropna(subset=["year", "value"]).sort_values("year")
 
-    if atmp.empty:
-        return None
+    if sub.empty: return
 
-    # 计算 1960-1990 距平
-    mask = (atmp["year"] >= 1960) & (atmp["year"] <= 1990)
-    baseline = atmp.loc[mask, "value"].mean()
-    if np.isnan(baseline):
-        baseline = atmp["value"].mean()
-        
-    atmp["diff"] = atmp["value"] - baseline
-
-    # 年代线
-    atmp["decade"] = (atmp["year"] // 10) * 10
-    decade_stats = atmp.groupby("decade")["value"].mean() - baseline
+    # 计算距平
+    mask = (sub["year"] >= 1960) & (sub["year"] <= 1990)
+    baseline = sub.loc[mask, "value"].mean() or sub["value"].mean()
+    sub["diff"] = sub["value"] - baseline
 
     # 绘图
     chart = Scatter(init_opts=opts.InitOpts(width="100%", height="500px"))
-    chart.add_xaxis(atmp["year"].tolist())
-    chart.add_yaxis(
-        "Annual Anomaly",
-        atmp["diff"].round(3).tolist(),
-        symbol_size=8,
-        itemstyle_opts=opts.ItemStyleOpts(color="#1f77b4", opacity=0.8),
-        label_opts=opts.LabelOpts(is_show=False),
-    )
-
-    for dec, val in decade_stats.items():
-        line = Line().add_xaxis([int(dec), int(dec + 9)])
-        line.add_yaxis(
-            "Decadal Avg",
-            [round(val, 3), round(val, 3)],
-            symbol="none",
-            linestyle_opts=opts.LineStyleOpts(color="#ff7f0e", width=3),
-            label_opts=opts.LabelOpts(is_show=False)
-        )
-        chart.overlap(line)
-
+    chart.add_xaxis(sub["year"].tolist())
+    chart.add_yaxis("Anomaly", sub["diff"].round(3).tolist(), symbol_size=8)
+    
     chart.set_global_opts(
         title_opts=opts.TitleOpts(title=f"Temp Anomaly: {pais}"),
         xaxis_opts=opts.AxisOpts(type_="value", splitline_opts=opts.SplitLineOpts(is_show=False)),
-        yaxis_opts=opts.AxisOpts(name="°C diff"),
-        tooltip_opts=opts.TooltipOpts(trigger="item"),
+        yaxis_opts=opts.AxisOpts(name="°C"),
         datazoom_opts=[opts.DataZoomOpts()]
     )
-    return chart
+    
+    # 关键点：使用 Quarto 语法生成选项卡标题
+    print(f'## {pais}')
+    # 输出图表的 HTML 源码
+    print(chart.render_embed())
 
-# 4. 渲染逻辑
+# 4. 执行循环渲染
 if not df.empty:
     countries = sorted(df['dim_name_1'].unique())
-    tab = Tab()
+    # 限制前几个国家测试，如果成功再扩展
     for c in countries:
-        fig = build_chart(df, c)
-        if fig:
-            tab.add(fig, c)
-    
-    # 使用 render_embed 并包裹在 display(HTML()) 中是 Quarto 渲染 HTML 挂件的最稳妥办法
-    display(HTML(tab.render_embed()))
+        render_country_chart(df, c)
 else:
-    display(HTML("<b style='color:red;'>Error: Data source is empty. Check API connection.</b>"))
+    print("Error: No data")
