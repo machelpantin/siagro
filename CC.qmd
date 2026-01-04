@@ -1,9 +1,7 @@
----
+
 title: "Climate data"
 execute:
   echo: false
----
-
 Climatic variables impact directly on agricultural production. This section includes annual and monthly data on temperature and precipitation at a national level.
 
 Las variables climáticas inciden directamente en la producción agrícola. Esta sección incluye datos anuales y mensuales de temperatura y precipitación a nivel nacional.
