@@ -6,7 +6,7 @@ execute:
 
 Climatic variables impact directly on agricultural production. This section provides a comparative analysis of monthly and annual average temperatures (1960-1990).
 
-::: {.panel-tabset}
+
 
 ## 📊 Monthly Details by Country
 
@@ -20,30 +20,33 @@ import numpy as np
 import requests
 from pyecharts.charts import Bar
 from pyecharts import options as opts
-from IPython.display import HTML, display
+from IPython.display import HTML, display, Markdown
 
 # 1. 核心配置：解决 GitHub Pages HTTPS 环境下的加载问题
 from pyecharts.globals import CurrentConfig
-CurrentConfig.ONLINE_HOST = "[https://assets.pyecharts.org/assets/v5/](https://assets.pyecharts.org/assets/v5/)"
+CurrentConfig.ONLINE_HOST = "https://assets.pyecharts.org/assets/v5/"
 
 # 2. 数据获取
-def get_data():
-    url = "[https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/4470/data/en](https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/4470/data/en)"
-    try:
-        r = requests.get(url, timeout=30)
-        df = pd.DataFrame(r.json()['body']['data'])
-        df['value'] = pd.to_numeric(df['value'], errors='coerce')
-        return df
-    except:
-        return pd.DataFrame()
+from utils_siagro import cepal_data  # imports from own module
+import logging
+df = cepal_data([4470], lang='en')
 
-df = get_data()
+# --- fix: ensure value is numeric and import Markdown for headings ---
+df['value'] = pd.to_numeric(df.get('value', pd.Series(dtype='float')), errors='coerce')
 
 # 月份排序顺序
 month_order = ['January', 'February', 'March', 'April', 'May', 'June',
                'July', 'August', 'September', 'October', 'November', 'December']
 
-if not df.empty:
+# Validate required columns before proceeding
+required_cols = ['Months', 'value', 'dim_85162', 'Subnational administrative division']
+missing_cols = [c for c in required_cols if c not in df.columns]
+
+if df.empty:
+    print("Error: Could not retrieve data from API.")
+elif missing_cols:
+    print(f"Error: Missing expected columns in the data: {missing_cols}")
+else:
     # 筛选 1960-1990 时期 (对应代码 85163)
     target_period = "85163"
     df_filtered = df[df['dim_85162'] == target_period].copy()
@@ -52,26 +55,45 @@ if not df.empty:
 
     # 获取地区列表并循环渲染
     target_col = 'Subnational administrative division'
-    locations = sorted(df_filtered[target_col].unique())
+    locations = sorted(df_filtered[target_col].dropna().unique())
 
     for loc in locations:
-        sub = df_filtered[df_filtered[target_col] == loc].copy()
-        # 聚合每个月的数据
-        monthly_avg = sub.groupby('Months')['value'].mean().reindex(month_order).reset_index()
-        
-        # 绘制柱状图
-        bar = Bar(init_opts=opts.InitOpts(width="100%", height="450px"))
-        bar.add_xaxis(month_order)
-        bar.add_yaxis("Avg Temperature", monthly_avg['value'].round(2).tolist(), color="#1f77b4")
-        bar.set_global_opts(
-            title_opts=opts.TitleOpts(title=f"Monthly Average Temp - {loc}"),
-            yaxis_opts=opts.AxisOpts(name="Temperature (°C)"),
-            tooltip_opts=opts.TooltipOpts(trigger="axis")
-        )
-        
-        # --- 关键：使用 Quarto 语法生成子选项卡标题 ---
-        print(f'### {loc}')
-        # 输出图表嵌入代码
-        print(bar.render_embed())
-else:
-    print("Error: Could not retrieve data from API.")
+        try:
+            sub = df_filtered[df_filtered[target_col] == loc].copy()
+            # Ensure Months column is string and categorical with the correct order
+            sub['Months'] = sub['Months'].astype(str)
+            sub['Months'] = pd.Categorical(sub['Months'], categories=month_order, ordered=True)
+
+            # 聚合每个月的数据，确保按 month_order 排序并且保留缺失月份
+            monthly_avg = sub.groupby('Months', sort=False, observed=False)['value'].mean()
+            monthly_avg = monthly_avg.reindex(month_order).reset_index()
+            monthly_avg.columns = ['Months', 'value']
+
+            # Replace NaN with None so JS charts can handle missing points
+            monthly_values = [None if pd.isna(v) else round(float(v), 2) for v in monthly_avg['value'].tolist()]
+
+            # 绘制柱状图
+            bar = Bar(init_opts=opts.InitOpts(width="100%", height="450px"))
+            bar.add_xaxis(month_order)
+            bar.add_yaxis("Avg Temperature", monthly_values)
+            bar.set_global_opts(
+                title_opts=opts.TitleOpts(title=f"Monthly Average Temp - {loc}"),
+                yaxis_opts=opts.AxisOpts(name="Temperature (°C)"),
+                tooltip_opts=opts.TooltipOpts(trigger="axis")
+            )
+
+            # 使用 Quarto 语法生成子选项卡标题并嵌入图表
+            display(Markdown(f"### {loc}"))
+            # render standalone HTML and embed via iframe (reliable for Quarto sites)
+            import re
+            from pathlib import Path
+            charts_dir = Path("charts")
+            charts_dir.mkdir(exist_ok=True)
+            safe_name = re.sub(r'[^A-Za-z0-9_-]+', '_', loc).strip('_').lower()
+            html_path = charts_dir / f"{safe_name}.html"
+            bar.render(str(html_path))
+            iframe_html = f'<iframe src="{html_path.as_posix()}" width="100%" height="480" frameborder="0"></iframe>'
+            display(HTML(iframe_html))
+        except Exception as e:
+            print(f"Plotting error for {loc}: {e}")
+````

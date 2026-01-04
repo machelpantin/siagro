@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Climate change – Siagro+</title>
+<title>Climate Data Analysis – Siagro+</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./CC.html" aria-current="page"> 
-<span class="menu-text">Climate change</span></a>
+<span class="menu-text">Climate Data Analysis</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -136,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Climate change</h1>
+<h1 class="title">Climate Data Analysis</h1>
 </div>
 
 
@@ -153,9 +153,56 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Climate change can impact on the production potential of all agricultural sectors though the change in both the levels and variability of climate variables. This section includes data on climate variables at a subnational level based on different climate change scenarios.</p>
+<p>Climatic variables impact directly on agricultural production. This section provides a comparative analysis of monthly and annual average temperatures (1960-1990).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">📊 Monthly Details by Country</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>#| warning: false #| message: false #| results: asis</p>
+<p>import pandas as pd import numpy as np import requests from pyecharts.charts import Bar from pyecharts import options as opts from IPython.display import HTML, display</p>
+<section id="核心配置解决-github-pages-https-环境下的加载问题" class="level1">
+<h1>1. 核心配置：解决 GitHub Pages HTTPS 环境下的加载问题</h1>
+<p>from pyecharts.globals import CurrentConfig CurrentConfig.ONLINE_HOST = “<a href="https://assets.pyecharts.org/assets/v5/">https://assets.pyecharts.org/assets/v5/</a>”</p>
+</section>
+<section id="数据获取" class="level1">
+<h1>2. 数据获取</h1>
+<p>def get_data(): url = “<a href="https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/4470/data/en">https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/4470/data/en</a>” try: r = requests.get(url, timeout=30) df = pd.DataFrame(r.json()[‘body’][‘data’]) df[‘value’] = pd.to_numeric(df[‘value’], errors=‘coerce’) return df except: return pd.DataFrame()</p>
+<p>df = get_data()</p>
+</section>
+<section id="月份排序顺序" class="level1">
+<h1>月份排序顺序</h1>
+<p>month_order = [‘January’, ‘February’, ‘March’, ‘April’, ‘May’, ‘June’, ‘July’, ‘August’, ‘September’, ‘October’, ‘November’, ‘December’]</p>
+<p>if not df.empty: # 筛选 1960-1990 时期 (对应代码 85163) target_period = “85163” df_filtered = df[df[‘dim_85162’] == target_period].copy() if df_filtered.empty: df_filtered = df.copy()</p>
+<pre><code># 获取地区列表并循环渲染
+target_col = 'Subnational administrative division'
+locations = sorted(df_filtered[target_col].unique())
+
+for loc in locations:
+    sub = df_filtered[df_filtered[target_col] == loc].copy()
+    # 聚合每个月的数据
+    monthly_avg = sub.groupby('Months')['value'].mean().reindex(month_order).reset_index()
+    
+    # 绘制柱状图
+    bar = Bar(init_opts=opts.InitOpts(width="100%", height="450px"))
+    bar.add_xaxis(month_order)
+    bar.add_yaxis("Avg Temperature", monthly_avg['value'].round(2).tolist(), color="#1f77b4")
+    bar.set_global_opts(
+        title_opts=opts.TitleOpts(title=f"Monthly Average Temp - {loc}"),
+        yaxis_opts=opts.AxisOpts(name="Temperature (°C)"),
+        tooltip_opts=opts.TooltipOpts(trigger="axis")
+    )
+    
+    # --- 关键：使用 Quarto 语法生成子选项卡标题 ---
+    print(f'### {loc}')
+    # 输出图表嵌入代码
+    print(bar.render_embed())</code></pre>
+<p>else: print(“Error: Could not retrieve data from API.”)</p>
 
 
+</section>
+</div>
+</div>
+</div>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
