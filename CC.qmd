@@ -19,27 +19,28 @@ from pyecharts.charts import Scatter, Line, Tab
 from pyecharts import options as opts
 from IPython.display import HTML, display
 
-# 1. 强制使用 HTTPS CDN，解决 GitHub Pages 不加载图表的问题
+# 1. 修正 CDN 地址 (确保没有 Markdown 括号)
 from pyecharts.globals import CurrentConfig
 CurrentConfig.ONLINE_HOST = "[https://assets.pyecharts.org/assets/v5/](https://assets.pyecharts.org/assets/v5/)"
 
-# 2. 数据获取函数 (由于没有 utils_siagro，直接请求 CEPALSTAT 接口)
+# 2. 数据获取函数
 def fetch_data(indicator_id):
     url = f"[https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/](https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/){indicator_id}/data/en"
     try:
         r = requests.get(url, timeout=30)
         r.raise_for_status()
-        # 提取数据主体
-        return pd.DataFrame(r.json()['body']['data'])
-    except:
+        json_data = r.json()
+        return pd.DataFrame(json_data['body']['data'])
+    except Exception as e:
+        # 如果报错，在页面显示具体错误原因
         return pd.DataFrame()
 
-# 获取平均气温指标数据
+# 获取数据
 df = fetch_data(4470)
 
 # 3. 绘图函数
 def build_chart(df, pais):
-    # 根据 API 结构筛选：dim_name_1 是国家，dim_name_3 是年份
+    # 根据 CEPAL API 标准字段筛选
     atmp = df[df['dim_name_1'] == pais].copy()
     
     atmp["value"] = pd.to_numeric(atmp["value"], errors="coerce")
@@ -49,7 +50,7 @@ def build_chart(df, pais):
     if atmp.empty:
         return None
 
-    # 计算 1960-1990 基准距平 (Anomaly)
+    # 计算 1960-1990 距平
     mask = (atmp["year"] >= 1960) & (atmp["year"] <= 1990)
     baseline = atmp.loc[mask, "value"].mean()
     if np.isnan(baseline):
@@ -57,14 +58,14 @@ def build_chart(df, pais):
         
     atmp["diff"] = atmp["value"] - baseline
 
-    # 计算年代平均值趋势
+    # 年代线
     atmp["decade"] = (atmp["year"] // 10) * 10
     decade_stats = atmp.groupby("decade")["value"].mean() - baseline
 
-    # 散点图绘制
-    scatter = Scatter(init_opts=opts.InitOpts(width="800px", height="500px"))
-    scatter.add_xaxis(atmp["year"].tolist())
-    scatter.add_yaxis(
+    # 绘图
+    chart = Scatter(init_opts=opts.InitOpts(width="100%", height="500px"))
+    chart.add_xaxis(atmp["year"].tolist())
+    chart.add_yaxis(
         "Annual Anomaly",
         atmp["diff"].round(3).tolist(),
         symbol_size=8,
@@ -72,7 +73,6 @@ def build_chart(df, pais):
         label_opts=opts.LabelOpts(is_show=False),
     )
 
-    # 叠加年代线
     for dec, val in decade_stats.items():
         line = Line().add_xaxis([int(dec), int(dec + 9)])
         line.add_yaxis(
@@ -82,18 +82,18 @@ def build_chart(df, pais):
             linestyle_opts=opts.LineStyleOpts(color="#ff7f0e", width=3),
             label_opts=opts.LabelOpts(is_show=False)
         )
-        scatter.overlap(line)
+        chart.overlap(line)
 
-    scatter.set_global_opts(
+    chart.set_global_opts(
         title_opts=opts.TitleOpts(title=f"Temp Anomaly: {pais}"),
         xaxis_opts=opts.AxisOpts(type_="value", splitline_opts=opts.SplitLineOpts(is_show=False)),
         yaxis_opts=opts.AxisOpts(name="°C diff"),
         tooltip_opts=opts.TooltipOpts(trigger="item"),
         datazoom_opts=[opts.DataZoomOpts()]
     )
-    return scatter
+    return chart
 
-# 4. 生成选项卡并渲染
+# 4. 渲染逻辑
 if not df.empty:
     countries = sorted(df['dim_name_1'].unique())
     tab = Tab()
@@ -102,7 +102,7 @@ if not df.empty:
         if fig:
             tab.add(fig, c)
     
-    # 【核心修复点】render_embed() 生成不依赖 RequireJS 的独立代码块
+    # 使用 render_embed 并包裹在 display(HTML()) 中是 Quarto 渲染 HTML 挂件的最稳妥办法
     display(HTML(tab.render_embed()))
 else:
-    display(HTML("<b style='color:red;'>Error: Could not fetch data from CEPAL API.</b>"))
+    display(HTML("<b style='color:red;'>Error: Data source is empty. Check API connection.</b>"))
