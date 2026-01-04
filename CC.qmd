@@ -1,6 +1,77 @@
 ---
-title: "Climate change"
+title: "Climate Data Analysis"
 execute:
   echo: false
 ---
-Climate change can impact on the production potential of all agricultural sectors though the change in both the levels and variability of climate variables. This section includes data on climate variables at a subnational level based on different climate change scenarios.
+
+Climatic variables impact directly on agricultural production. This section provides a comparative analysis of monthly and annual average temperatures (1960-1990).
+
+::: {.panel-tabset}
+
+## 📊 Monthly Details by Country
+
+```{python}
+#| warning: false
+#| message: false
+#| results: asis
+
+import pandas as pd
+import numpy as np
+import requests
+from pyecharts.charts import Bar
+from pyecharts import options as opts
+from IPython.display import HTML, display
+
+# 1. 核心配置：解决 GitHub Pages HTTPS 环境下的加载问题
+from pyecharts.globals import CurrentConfig
+CurrentConfig.ONLINE_HOST = "[https://assets.pyecharts.org/assets/v5/](https://assets.pyecharts.org/assets/v5/)"
+
+# 2. 数据获取
+def get_data():
+    url = "[https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/4470/data/en](https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/4470/data/en)"
+    try:
+        r = requests.get(url, timeout=30)
+        df = pd.DataFrame(r.json()['body']['data'])
+        df['value'] = pd.to_numeric(df['value'], errors='coerce')
+        return df
+    except:
+        return pd.DataFrame()
+
+df = get_data()
+
+# 月份排序顺序
+month_order = ['January', 'February', 'March', 'April', 'May', 'June',
+               'July', 'August', 'September', 'October', 'November', 'December']
+
+if not df.empty:
+    # 筛选 1960-1990 时期 (对应代码 85163)
+    target_period = "85163"
+    df_filtered = df[df['dim_85162'] == target_period].copy()
+    if df_filtered.empty:
+        df_filtered = df.copy()
+
+    # 获取地区列表并循环渲染
+    target_col = 'Subnational administrative division'
+    locations = sorted(df_filtered[target_col].unique())
+
+    for loc in locations:
+        sub = df_filtered[df_filtered[target_col] == loc].copy()
+        # 聚合每个月的数据
+        monthly_avg = sub.groupby('Months')['value'].mean().reindex(month_order).reset_index()
+        
+        # 绘制柱状图
+        bar = Bar(init_opts=opts.InitOpts(width="100%", height="450px"))
+        bar.add_xaxis(month_order)
+        bar.add_yaxis("Avg Temperature", monthly_avg['value'].round(2).tolist(), color="#1f77b4")
+        bar.set_global_opts(
+            title_opts=opts.TitleOpts(title=f"Monthly Average Temp - {loc}"),
+            yaxis_opts=opts.AxisOpts(name="Temperature (°C)"),
+            tooltip_opts=opts.TooltipOpts(trigger="axis")
+        )
+        
+        # --- 关键：使用 Quarto 语法生成子选项卡标题 ---
+        print(f'### {loc}')
+        # 输出图表嵌入代码
+        print(bar.render_embed())
+else:
+    print("Error: Could not retrieve data from API.")
