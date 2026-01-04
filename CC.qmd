@@ -1,89 +1,59 @@
 ```{python}
 #| echo: false
 #| warning: false
+#| message: false
 
 import pandas as pd
 import numpy as np
 from pyecharts.charts import Scatter, Line, Tab
 from pyecharts import options as opts
-from pyecharts.commons.utils import JsCode
 from utils_siagro import cepal_data
-from IPython.display import HTML
+from IPython.display import HTML, display
 
-# 1. 获取数据 (确保使用的是你想展示的指标 ID，比如 4470)
+# 1. 强制使用全局引用模式，避开 require.js 的干扰
+from pyecharts.globals import CurrentConfig
+CurrentConfig.ONLINE_HOST = "[https://assets.pyecharts.org/assets/v5/](https://assets.pyecharts.org/assets/v5/)"
+
+# 2. 获取数据
 df = cepal_data([4470], lang='en')
 
 def build_chart(df, pais):
-    # 筛选该国家数据
     atmp = df[df['Subnational administrative division'] == pais].copy()
-    
-    # 转换数值
     atmp["value"] = pd.to_numeric(atmp["value"], errors="coerce")
-    # 自动匹配年份列
     year_col = 'Years' if 'Years' in atmp.columns else 'Años__ESTANDAR'
     atmp["year"] = pd.to_numeric(atmp[year_col], errors="coerce")
-    
     atmp = atmp.dropna(subset=["year", "value"]).sort_values("year")
 
-    if atmp.empty:
-        return None
+    if atmp.empty: return None
 
-    # 基准线 1960–1990
+    # 计算距平
     mask = (atmp["year"] >= 1960) & (atmp["year"] <= 1990)
     baseline = atmp.loc[mask, "value"].mean()
-    if np.isnan(baseline):
-        baseline = atmp["value"].mean()
-        
-    atmp["temp-diff"] = atmp["value"] - baseline
-
-    # 年代统计
-    atmp["decade_start"] = (atmp["year"] // 10) * 10
-    decade_stats = atmp.groupby("decade_start").agg(
-        year_min=("year","min"),
-        year_max=("year","max"),
-        avg_10yr=("value","mean")
-    ).reset_index()
+    if np.isnan(baseline): baseline = atmp["value"].mean()
+    atmp["diff"] = atmp["value"] - baseline
 
     # 绘图
-    chart = Scatter(init_opts=opts.InitOpts(width="800px", height="550px"))
+    chart = Scatter(init_opts=opts.InitOpts(width="100%", height="500px"))
     chart.add_xaxis(atmp["year"].tolist())
-    chart.add_yaxis(
-        "Annual Anomaly",
-        atmp["temp-diff"].round(3).tolist(),
-        symbol_size=8,
-        itemstyle_opts=opts.ItemStyleOpts(color="#1f77b4", opacity=0.8),
-        label_opts=opts.LabelOpts(is_show=False),
-    )
-
-    for r in decade_stats.itertuples():
-        y_anom = r.avg_10yr - baseline
-        line = Line().add_xaxis([int(r.year_min), int(r.year_max)])
-        line.add_yaxis("Decade Avg", [round(y_anom, 3), round(y_anom, 3)],
-                       symbol="none", linestyle_opts=opts.LineStyleOpts(color="#ff7f0e", width=3),
-                       label_opts=opts.LabelOpts(is_show=False))
-        chart.overlap(line)
-
+    chart.add_yaxis("Anomaly", atmp["diff"].round(3).tolist(), symbol_size=8)
+    
     chart.set_global_opts(
-        title_opts=opts.TitleOpts(title=f"Temp Anomaly - {pais}"),
-        xaxis_opts=opts.AxisOpts(type_="value", name="Year", splitline_opts=opts.SplitLineOpts(is_show=False)),
-        yaxis_opts=opts.AxisOpts(name="Temp Diff (°C)"),
-        tooltip_opts=opts.TooltipOpts(trigger="item", formatter="{b}: {c}°C"),
+        title_opts=opts.TitleOpts(title=f"Temp Anomaly: {pais}"),
+        xaxis_opts=opts.AxisOpts(type_="value", splitline_opts=opts.SplitLineOpts(is_show=False)),
         datazoom_opts=[opts.DataZoomOpts()]
     )
     return chart
 
-# 生成 Tab 并渲染
+# 3. 核心修复点：使用 render_embed() 配合 display(HTML(...))
 if not df.empty:
-    country_col = 'Subnational administrative division'
-    pais_values = sorted(df[country_col].unique())
+    countries = sorted(df['Subnational administrative division'].unique())
     tab = Tab()
-
-    for pais in pais_values:
-        c = build_chart(df, pais)
-        if c:
-            tab.add(c, pais)
+    for c in countries:
+        fig = build_chart(df, c)
+        if fig: tab.add(fig, c)
     
-    # 关键修改：渲染为 HTML 字符串供 Quarto 捕获
-    display(HTML(tab.render_embed()))
+    # render_embed() 会生成不依赖外部 require.js 的独立代码块
+    output_html = tab.render_embed()
+    display(HTML(output_html))
 else:
-    print("No data available")
+    print("No Data")
