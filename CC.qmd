@@ -1,99 +1,83 @@
----
-title: "Climate Data Analysis"
-execute:
-  echo: false
----
-
-Climatic variables impact directly on agricultural production. This section provides a comparative analysis of monthly and annual average temperatures (1960-1990).
-
-
-
-## 📊 Monthly Details by Country
-
-```{python}
-#| warning: false
-#| message: false
-#| results: asis
-
 import pandas as pd
 import numpy as np
 import requests
-from pyecharts.charts import Bar
+import logging
+from pyecharts.charts import Bar, Tab, Line
 from pyecharts import options as opts
-from IPython.display import HTML, display, Markdown
-
-# 1. 核心配置：解决 GitHub Pages HTTPS 环境下的加载问题
+from pyecharts.commons.utils import JsCode
 from pyecharts.globals import CurrentConfig
+
+# 设置 Pyecharts 资源地址，确保图表能正常显示
 CurrentConfig.ONLINE_HOST = "https://assets.pyecharts.org/assets/v5/"
 
-# 2. 数据获取
-from utils_siagro import cepal_data  # imports from own module
-import logging
-df = cepal_data([4470], lang='en')
 
-# --- fix: ensure value is numeric and import Markdown for headings ---
-df['value'] = pd.to_numeric(df.get('value', pd.Series(dtype='float')), errors='coerce')
+# 模拟 utils_siagro 的数据获取功能
+def fetch_cepal_data(indicator_id):
+    print(f"正在从 API 获取指标 {indicator_id} 的数据...")
+    url = f"https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/{indicator_id}/data/en"
+    try:
+        r = requests.get(url, timeout=30)
+        r.raise_for_status()
+        # 这里的 JSON 解析路径参考了 CEPALSTAT 的常见结构
+        data = r.json()['body']['data']
+        return pd.DataFrame(data)
+    except Exception as e:
+        print(f"数据抓取失败: {e}")
+        return pd.DataFrame()
 
-# 月份排序顺序
-month_order = ['January', 'February', 'March', 'April', 'May', 'June',
-               'July', 'August', 'September', 'October', 'November', 'December']
 
-# Validate required columns before proceeding
-required_cols = ['Months', 'value', 'dim_85162', 'Subnational administrative division']
-missing_cols = [c for c in required_cols if c not in df.columns]
+# --- 1. 获取并清洗数据 ---
+df = fetch_cepal_data(4470)
 
-if df.empty:
-    print("Error: Could not retrieve data from API.")
-elif missing_cols:
-    print(f"Error: Missing expected columns in the data: {missing_cols}")
-else:
-    # 筛选 1960-1990 时期 (对应代码 85163)
-    target_period = "85163"
-    df_filtered = df[df['dim_85162'] == target_period].copy()
-    if df_filtered.empty:
+# 月份标准排序
+month_order = {
+    'January': 1, 'February': 2, 'March': 3, 'April': 4,
+    'May': 5, 'June': 6, 'July': 7, 'August': 8,
+    'September': 9, 'October': 10, 'November': 11, 'December': 12
+}
+
+# 筛选 1960-1990 历史数据
+if not df.empty:
+    if 'dim_85162' in df.columns:
+        df_filtered = df[df['dim_85162'] == 85163].copy()
+    else:
         df_filtered = df.copy()
 
-    # 获取地区列表并循环渲染
-    target_col = 'Subnational administrative division'
-    locations = sorted(df_filtered[target_col].dropna().unique())
+    df_filtered['value'] = pd.to_numeric(df_filtered['value'], errors='coerce')
 
-    for loc in locations:
-        try:
-            sub = df_filtered[df_filtered[target_col] == loc].copy()
-            # Ensure Months column is string and categorical with the correct order
-            sub['Months'] = sub['Months'].astype(str)
-            sub['Months'] = pd.Categorical(sub['Months'], categories=month_order, ordered=True)
+    # --- 2. 构建图表 ---
+    country_names = ['Belize', 'Costa Rica', 'Cuba', 'El Salvador', 'Guatemala',
+                     'Haiti', 'Honduras', 'Mexico', 'Panama', 'Dominican Republic']
 
-            # 聚合每个月的数据，确保按 month_order 排序并且保留缺失月份
-            monthly_avg = sub.groupby('Months', sort=False, observed=False)['value'].mean()
-            monthly_avg = monthly_avg.reindex(month_order).reset_index()
-            monthly_avg.columns = ['Months', 'value']
+    # 创建选项卡容器
+    tab = Tab()
 
-            # Replace NaN with None so JS charts can handle missing points
-            monthly_values = [None if pd.isna(v) else round(float(v), 2) for v in monthly_avg['value'].tolist()]
+    for country in country_names:
+        # dim_name_1 通常是 API 中的国家名列
+        country_data = df_filtered[df_filtered['dim_name_1'] == country].copy()
+        if country_data.empty: continue
 
-            # 绘制柱状图
-            bar = Bar(init_opts=opts.InitOpts(width="100%", height="450px"))
-            bar.add_xaxis(month_order)
-            bar.add_yaxis("Avg Temperature", monthly_values)
-            bar.set_global_opts(
-                title_opts=opts.TitleOpts(title=f"Monthly Average Temp - {loc}"),
-                yaxis_opts=opts.AxisOpts(name="Temperature (°C)"),
-                tooltip_opts=opts.TooltipOpts(trigger="axis")
-            )
+        # 计算月平均值
+        # dim_name_2 通常是 API 中的月份名列
+        monthly_avg = country_data.groupby('dim_name_2')['value'].mean().reset_index()
+        monthly_avg['num'] = monthly_avg['dim_name_2'].map(month_order)
+        monthly_avg = monthly_avg.sort_values('num')
 
-            # 使用 Quarto 语法生成子选项卡标题并嵌入图表
-            display(Markdown(f"### {loc}"))
-            # render standalone HTML and embed via iframe (reliable for Quarto sites)
-            import re
-            from pathlib import Path
-            charts_dir = Path("charts")
-            charts_dir.mkdir(exist_ok=True)
-            safe_name = re.sub(r'[^A-Za-z0-9_-]+', '_', loc).strip('_').lower()
-            html_path = charts_dir / f"{safe_name}.html"
-            bar.render(str(html_path))
-            iframe_html = f'<iframe src="{html_path.as_posix()}" width="100%" height="480" frameborder="0"></iframe>'
-            display(HTML(iframe_html))
-        except Exception as e:
-            print(f"Plotting error for {loc}: {e}")
-````
+        bar = Bar(init_opts=opts.InitOpts(width="900px", height="500px"))
+        bar.add_xaxis(monthly_avg['dim_name_2'].tolist())
+        bar.add_yaxis(
+            "Temperature (°C)",
+            monthly_avg['value'].round(2).tolist(),
+            label_opts=opts.LabelOpts(is_show=True, position="top", formatter="{c}°C")
+        )
+        bar.set_global_opts(title_opts=opts.TitleOpts(title=f"Monthly Temp - {country}"))
+        tab.add(bar, country)
+
+    # --- 3. 生成并展示结果 ---
+    output_filename = "climate_change_report.html"
+    tab.render(output_filename)
+    print(f"\n✅ 运行成功！")
+    print(f"👉 请在你的项目目录下找到 '{output_filename}'，双击用浏览器打开即可。")
+
+else:
+    print("❌ 未抓取到有效数据，请检查网络连接。")
