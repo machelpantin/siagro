@@ -130,16 +130,57 @@ def build_regional_chart(df, country_name):
     # Collect all temperatures for Y-axis range calculation
     all_temps_list = []
     
+    # Calculate national average from sub-regions if available
+    # This is more accurate than using potentially inconsistent national-level data
+    calculated_national_temps = None
+    if len(available_sub_regions) > 0:
+        # Collect all sub-region data by month
+        all_regions_data = df[df['Subnational administrative division'].isin(available_sub_regions)].copy()
+        if not all_regions_data.empty:
+            calculated_national = all_regions_data.groupby('Months')['value'].mean().reset_index()
+            calculated_national['month_num'] = calculated_national['Months'].map(month_order)
+            calculated_national = calculated_national.sort_values('month_num')
+            calculated_national_temps = calculated_national['value'].round(2).tolist()
+    
     # Add national average line (black, always visible, cannot be hidden)
-    if not national_data.empty:
+    # Prefer calculated average from sub-regions if available and consistent
+    use_calculated = False
+    if not national_data.empty and calculated_national_temps is not None:
+        # Check if national data is consistent with sub-regions
+        national_avg = national_data['value'].mean()
+        calculated_avg = pd.Series(calculated_national_temps).mean()
+        diff = abs(national_avg - calculated_avg)
+        
+        # If difference is too large (>3°C), use calculated average
+        if diff > 3.0:
+            print(f"  ⚠️  {country_name}: 国家数据与子区域差异较大 ({diff:.2f}°C)，使用子区域计算的平均值")
+            use_calculated = True
+            national_temps = calculated_national_temps
+        else:
+            # Use official national data
+            national_monthly = national_data.groupby('Months')['value'].mean().reset_index()
+            national_monthly['month_num'] = national_monthly['Months'].map(month_order)
+            national_monthly = national_monthly.sort_values('month_num')
+            national_temps = national_monthly['value'].round(2).tolist()
+    elif calculated_national_temps is not None:
+        # No national data, use calculated
+        use_calculated = True
+        national_temps = calculated_national_temps
+    elif not national_data.empty:
+        # Only national data available
         national_monthly = national_data.groupby('Months')['value'].mean().reset_index()
         national_monthly['month_num'] = national_monthly['Months'].map(month_order)
         national_monthly = national_monthly.sort_values('month_num')
         national_temps = national_monthly['value'].round(2).tolist()
+    else:
+        national_temps = None
+    
+    if national_temps:
         all_temps_list.extend(national_temps)
         
+        label_suffix = " (Calculated from Sub-regions)" if use_calculated else " (National Avg)"
         chart.add_yaxis(
-            f"{country_name} (National Avg)",
+            f"{country_name}{label_suffix}",
             national_temps,
             is_smooth=True,
             symbol="circle",
