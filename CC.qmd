@@ -1,83 +1,409 @@
+---
+title: "Climate change"
+execute:
+  echo: false
+---
+Climate change can impact on the production potential of all agricultural sectors though the change in both the levels and variability of climate variables. This section includes data on climate variables at a subnational level based on different climate change scenarios.
+
+El cambio climático puede afectar el potencial productivo de todos los sectores agrícolas a través del cambio tanto en los niveles como en la variabilidad de las variables climáticas. Esta sección incluye datos sobre variables climáticas a nivel subnacional basados en diferentes escenarios de cambio climático.
+
+```{python}
 import pandas as pd
 import numpy as np
-import requests
+from utils_siagro import cepal_data
 import logging
-from pyecharts.charts import Bar, Tab, Line
+logging.getLogger().setLevel(logging.WARNING)
+```
+
+```{python}
+# Fetch climate change temperature data (indicator 4470: Average temperature 1960-2000)
+df = cepal_data([4470], lang='en')
+```
+
+## Average Temperature by Country (1960-1990) / Temperatura Promedio por País
+
+Select a country tab to view monthly average temperature patterns. Click on different tabs to compare countries.
+
+Seleccione una pestaña de país para ver los patrones de temperatura mensual promedio. Haga clic en diferentes pestañas para comparar países.
+
+```{python}
+#| results: asis
+from pyecharts.charts import Line, Tab
 from pyecharts import options as opts
 from pyecharts.commons.utils import JsCode
-from pyecharts.globals import CurrentConfig
+from pyecharts.globals import CurrentConfig, NotebookType
 
-# 设置 Pyecharts 资源地址，确保图表能正常显示
-CurrentConfig.ONLINE_HOST = "https://assets.pyecharts.org/assets/v5/"
+# Configure PyECharts
+CurrentConfig.ONLINE_HOST = "site_libs/echarts/"
+CurrentConfig.NOTEBOOK_TYPE = NotebookType.JUPYTER_NOTEBOOK
 
-
-# 模拟 utils_siagro 的数据获取功能
-def fetch_cepal_data(indicator_id):
-    print(f"正在从 API 获取指标 {indicator_id} 的数据...")
-    url = f"https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/{indicator_id}/data/en"
-    try:
-        r = requests.get(url, timeout=30)
-        r.raise_for_status()
-        # 这里的 JSON 解析路径参考了 CEPALSTAT 的常见结构
-        data = r.json()['body']['data']
-        return pd.DataFrame(data)
-    except Exception as e:
-        print(f"数据抓取失败: {e}")
-        return pd.DataFrame()
-
-
-# --- 1. 获取并清洗数据 ---
-df = fetch_cepal_data(4470)
-
-# 月份标准排序
+# Month order for sorting
 month_order = {
     'January': 1, 'February': 2, 'March': 3, 'April': 4,
     'May': 5, 'June': 6, 'July': 7, 'August': 8,
     'September': 9, 'October': 10, 'November': 11, 'December': 12
 }
 
-# 筛选 1960-1990 历史数据
-if not df.empty:
-    if 'dim_85162' in df.columns:
-        df_filtered = df[df['dim_85162'] == 85163].copy()
-    else:
-        df_filtered = df.copy()
-
-    df_filtered['value'] = pd.to_numeric(df_filtered['value'], errors='coerce')
-
-    # --- 2. 构建图表 ---
-    country_names = ['Belize', 'Costa Rica', 'Cuba', 'El Salvador', 'Guatemala',
-                     'Haiti', 'Honduras', 'Mexico', 'Panama', 'Dominican Republic']
-
-    # 创建选项卡容器
-    tab = Tab()
-
-    for country in country_names:
-        # dim_name_1 通常是 API 中的国家名列
-        country_data = df_filtered[df_filtered['dim_name_1'] == country].copy()
-        if country_data.empty: continue
-
-        # 计算月平均值
-        # dim_name_2 通常是 API 中的月份名列
-        monthly_avg = country_data.groupby('dim_name_2')['value'].mean().reset_index()
-        monthly_avg['num'] = monthly_avg['dim_name_2'].map(month_order)
-        monthly_avg = monthly_avg.sort_values('num')
-
-        bar = Bar(init_opts=opts.InitOpts(width="900px", height="500px"))
-        bar.add_xaxis(monthly_avg['dim_name_2'].tolist())
-        bar.add_yaxis(
-            "Temperature (°C)",
-            monthly_avg['value'].round(2).tolist(),
-            label_opts=opts.LabelOpts(is_show=True, position="top", formatter="{c}°C")
-        )
-        bar.set_global_opts(title_opts=opts.TitleOpts(title=f"Monthly Temp - {country}"))
-        tab.add(bar, country)
-
-    # --- 3. 生成并展示结果 ---
-    output_filename = "climate_change_report.html"
-    tab.render(output_filename)
-    print(f"\n✅ 运行成功！")
-    print(f"👉 请在你的项目目录下找到 '{output_filename}'，双击用浏览器打开即可。")
-
+# Filter for historical period 1960-1990 (dim_85162 = 85163)
+if 'dim_85162' in df.columns:
+    df_filtered = df[df['dim_85162'] == 85163].copy()
 else:
-    print("❌ 未抓取到有效数据，请检查网络连接。")
+    df_filtered = df.copy()
+
+df_filtered['value'] = pd.to_numeric(df_filtered['value'], errors='coerce')
+
+def build_regional_chart(df, country_name):
+    """Build line chart showing regional vs national temperature comparison with interactive legend"""
+    
+    if 'Subnational administrative division' not in df.columns or 'Months' not in df.columns:
+        return None
+    
+    # Get national level data (exact match)
+    national_data = df[df['Subnational administrative division'] == country_name].copy()
+    
+    # Get all sub-regions for this country
+    # Strategy: Find all regions that are not the country name itself
+    # We'll use a mapping approach - check which regions belong to which country
+    all_regions_list = df['Subnational administrative division'].unique()
+    
+    # Define country-region mappings (based on data structure)
+    country_regions_map = {
+        'Belize': ['Cayo', 'Corozal', 'Orange Walk', 'Stann Creek', 'Toledo'],
+        'Costa Rica': ['Alajuela', 'Cartago', 'Guanacaste', 'Heredia', 'Limón', 'Puntarenas', 'San José'],
+        'Cuba': ['Artemisa', 'Camagüey', 'Ciego de Avila', 'Cienfuegos', 'Granma', 'Guantánamo', 
+                 'Holguín', 'Isla de la Juventud', 'La Habana', 'Las Tunas', 'Matanzas', 
+                 'Mayabeque', 'Pinar del Río', 'Sancti Spíritus', 'Santiago de Cuba', 'Villa Clara'],
+        'El Salvador': ['Ahuachapán', 'Cabañas', 'Chalatenango', 'Cuscatlán', 'La Libertad', 
+                       'La Paz', 'La Unión', 'Morazán', 'San Miguel', 'San Salvador', 
+                       'San Vicente', 'Santa Ana', 'Sonsonate', 'Usulután'],
+        'Guatemala': ['Alta Verapaz', 'Baja Verapaz', 'Chimaltenango', 'Chiquimula', 'El Progreso',
+                     'Escuintla', 'Guatemala', 'Huehuetenango', 'Izabal', 'Jalapa', 'Jutiapa',
+                     'Petén', 'Quetzaltenango', 'Quiché', 'Retalhuleu', 'Sacatepéquez',
+                     'San Marcos', 'Santa Rosa', 'Sololá', 'Suchitepéquez', 'Totonicapán', 'Zacapa'],
+        'Haiti': ['Artibonite', 'Centre', 'Grand\'Anse', 'Nippes', 'Nord', 'Nord-Est', 
+                  'Nord-Ouest', 'Ouest', 'Sud', 'Sud-Est'],
+        'Honduras': ['Atlántida', 'Choluteca', 'Colón', 'Comayagua', 'Copán', 'Cortés',
+                    'El Paraíso', 'Francisco Morazán', 'Gracias a Dios', 'Intibucá',
+                    'Islas de la Bahía', 'La Paz', 'Lempira', 'Ocotepeque', 'Olancho',
+                    'Santa Bárbara', 'Valle', 'Yoro'],
+        'Mexico': ['Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche',
+                   'Chiapas', 'Chihuahua', 'Coahuila', 'Colima', 'Distrito Federal', 'Durango',
+                   'Guanajuato', 'Guerrero', 'Hidalgo', 'Jalisco', 'México', 'Michoacán',
+                   'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro',
+                   'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco',
+                   'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas'],
+        'Panama': ['Bocas del Toro', 'Chiriquí', 'Coclé', 'Colón', 'Darién', 'Herrera',
+                  'Los Santos', 'Panamá', 'Panamá Oeste', 'Veraguas'],
+        'Dominican Republic': ['Azua', 'Baoruco', 'Barahona', 'Dajabón', 'Distrito Nacional',
+                               'Duarte', 'El Seibo', 'Espaillat', 'Hato Mayor', 'Hermanas Mirabal',
+                               'Independencia', 'La Altagracia', 'La Romana', 'La Vega', 'María Trinidad Sánchez',
+                               'Monseñor Nouel', 'Monte Cristi', 'Monte Plata', 'Pedernales', 'Peravia',
+                               'Puerto Plata', 'Samaná', 'San Cristóbal', 'San José de Ocoa', 'San Juan',
+                               'San Pedro de Macorís', 'Sánchez Ramírez', 'Santiago', 'Santiago Rodríguez',
+                               'Santo Domingo', 'Valverde']
+    }
+    
+    # Get sub-regions for this country
+    sub_regions = country_regions_map.get(country_name, [])
+    
+    # Filter actual sub-regions that exist in data
+    available_sub_regions = []
+    for region in sub_regions:
+        region_data = df[df['Subnational administrative division'] == region]
+        if not region_data.empty:
+            available_sub_regions.append(region)
+    
+    # Month labels (short form)
+    month_labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    
+    # Create line chart
+    chart = Line(init_opts=opts.InitOpts(width="900px", height="550px"))
+    chart.add_xaxis(month_labels)
+    
+    # Colors for sub-regions (more colors for many regions)
+    region_colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', 
+                     '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc', '#ff6b6b',
+                     '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#a29bfe',
+                     '#fd79a8', '#fdcb6e', '#e17055', '#00b894', '#00cec9']
+    
+    # Collect all temperatures for Y-axis range calculation
+    all_temps_list = []
+    
+    # Add national average line (black, always visible, cannot be hidden)
+    if not national_data.empty:
+        national_monthly = national_data.groupby('Months')['value'].mean().reset_index()
+        national_monthly['month_num'] = national_monthly['Months'].map(month_order)
+        national_monthly = national_monthly.sort_values('month_num')
+        national_temps = national_monthly['value'].round(2).tolist()
+        all_temps_list.extend(national_temps)
+        
+        chart.add_yaxis(
+            f"{country_name} (National Avg)",
+            national_temps,
+            is_smooth=True,
+            symbol="circle",
+            symbol_size=8,
+            linestyle_opts=opts.LineStyleOpts(color="#000000", width=3),
+            itemstyle_opts=opts.ItemStyleOpts(color="#000000"),
+            label_opts=opts.LabelOpts(
+                is_show=True,
+                position="top",
+                formatter=JsCode("function(params) { return params.value[1].toFixed(1) + '°C'; }")
+            )
+        )
+    
+    # Add sub-regional lines (can be toggled via legend)
+    for idx, region in enumerate(available_sub_regions):
+        region_data = df[df['Subnational administrative division'] == region].copy()
+        if region_data.empty:
+            continue
+        
+        monthly_avg = region_data.groupby('Months')['value'].mean().reset_index()
+        monthly_avg['month_num'] = monthly_avg['Months'].map(month_order)
+        monthly_avg = monthly_avg.sort_values('month_num')
+        
+        temps = monthly_avg['value'].round(2).tolist()
+        all_temps_list.extend(temps)
+        color = region_colors[idx % len(region_colors)]
+        
+        if temps:
+            chart.add_yaxis(
+                region,  # Region name as series name
+                temps,
+                is_smooth=True,
+                symbol="circle",
+                symbol_size=6,
+                linestyle_opts=opts.LineStyleOpts(color=color, width=2),
+                itemstyle_opts=opts.ItemStyleOpts(color=color),
+                label_opts=opts.LabelOpts(is_show=False)  # No labels on regional lines to reduce clutter
+            )
+    
+    # Calculate Y-axis range based on all data
+    if all_temps_list:
+        all_temps_series = pd.Series(all_temps_list)
+        y_min = max(10, all_temps_series.min() - 2)
+        y_max = min(35, all_temps_series.max() + 2)
+    else:
+        y_min, y_max = 10, 35
+    
+    chart.set_global_opts(
+        title_opts=opts.TitleOpts(
+            title=f"Regional vs National: {country_name}",
+            subtitle="Black line = National Average | Colored lines = Sub-regions | Source: CEPALSTAT",
+            title_textstyle_opts=opts.TextStyleOpts(font_size=18, font_weight="bold"),
+            pos_left="center"
+        ),
+        xaxis_opts=opts.AxisOpts(
+            name="Month",
+            name_location="middle",
+            name_gap=30,
+            axislabel_opts=opts.LabelOpts(font_size=11)
+        ),
+        yaxis_opts=opts.AxisOpts(
+            name="Temperature (°C)",
+            name_location="middle",
+            name_gap=50,
+            min_=round(y_min),
+            max_=round(y_max),
+            axislabel_opts=opts.LabelOpts(font_size=11),
+            splitline_opts=opts.SplitLineOpts(
+                is_show=True,
+                linestyle_opts=opts.LineStyleOpts(type_="dashed", opacity=0.3)
+            )
+        ),
+        tooltip_opts=opts.TooltipOpts(
+            trigger="axis",
+            axis_pointer_type="cross",
+            formatter=JsCode("""
+                function(params) {
+                    var result = params[0].name + '<br/>';
+                    params.forEach(function(item) {
+                        result += item.marker + item.seriesName + ': ' + 
+                                  item.value[1].toFixed(1) + '°C<br/>';
+                    });
+                    return result;
+                }
+            """)
+        ),
+        legend_opts=opts.LegendOpts(
+            is_show=True,
+            pos_top="10%",
+            pos_left="center",
+            item_width=25,
+            item_height=14,
+            textstyle_opts=opts.TextStyleOpts(font_size=11),
+            type_="scroll",
+            selected_mode="multiple"  # Allow clicking legend items to show/hide series
+            # Users can click on legend items to toggle visibility of regional lines
+        )
+    )
+    
+    return chart
+
+# Get unique country names (national level divisions)
+country_names = ['Belize', 'Costa Rica', 'Cuba', 'El Salvador', 'Guatemala', 
+                 'Haiti', 'Honduras', 'Mexico', 'Panama', 'Dominican Republic']
+
+# Build tabs
+tab = Tab()
+for country in country_names:
+    chart = build_regional_chart(df_filtered, country)
+    if chart:
+        tab.add(chart, country)
+
+tab.render_notebook()
+```
+
+## Multi-Country Temperature Comparison / Comparación de Temperatura entre Países
+
+This interactive chart allows you to compare temperature patterns across multiple countries. Click on country names in the legend to show or hide individual countries.
+
+Este gráfico interactivo permite comparar los patrones de temperatura entre múltiples países. Haga clic en los nombres de los países en la leyenda para mostrar u ocultar países individuales.
+
+```{python}
+#| results: asis
+from pyecharts.charts import Line
+
+def build_multi_country_line(df):
+    """Build line chart comparing multiple countries"""
+    
+    chart = Line(init_opts=opts.InitOpts(width="900px", height="550px"))
+    
+    colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', 
+              '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc', '#ff9f7f']
+    
+    # Month labels for x-axis
+    month_labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    
+    chart.add_xaxis(month_labels)
+    
+    for idx, country in enumerate(country_names):
+        country_data = df_filtered[df_filtered['Subnational administrative division'] == country].copy()
+        
+        if country_data.empty or 'Months' not in country_data.columns:
+            continue
+        
+        # Calculate average by month
+        monthly_avg = country_data.groupby('Months')['value'].mean().reset_index()
+        monthly_avg['month_num'] = monthly_avg['Months'].map(month_order)
+        monthly_avg = monthly_avg.sort_values('month_num')
+        
+        temps = monthly_avg['value'].round(2).tolist()
+        
+        if temps:
+            chart.add_yaxis(
+                country,
+                temps,
+                is_smooth=True,
+                symbol_size=8,
+                linestyle_opts=opts.LineStyleOpts(width=2),
+                itemstyle_opts=opts.ItemStyleOpts(color=colors[idx % len(colors)]),
+                label_opts=opts.LabelOpts(is_show=False)
+            )
+    
+    chart.set_global_opts(
+        title_opts=opts.TitleOpts(
+            title="Monthly Temperature Comparison",
+            subtitle="Click legend to show/hide countries | Source: CEPALSTAT"
+        ),
+        xaxis_opts=opts.AxisOpts(name="Month"),
+        yaxis_opts=opts.AxisOpts(
+            name="Temperature (°C)",
+            min_=15,
+            max_=30
+        ),
+        tooltip_opts=opts.TooltipOpts(
+            trigger="axis",
+            axis_pointer_type="cross"
+        ),
+        legend_opts=opts.LegendOpts(
+            is_show=True,
+            pos_top="5%",
+            selected_mode="multiple",
+            type_="scroll"
+        )
+    )
+    
+    return chart
+
+line_chart = build_multi_country_line(df_filtered)
+line_chart.render_notebook()
+```
+
+## Country Ranking by Average Temperature / Ranking de Países por Temperatura Promedio
+
+Horizontal bar chart showing annual average temperature by country, sorted from highest to lowest.
+
+Gráfico de barras horizontal que muestra la temperatura promedio anual por país, ordenado de mayor a menor.
+
+```{python}
+#| results: asis
+from pyecharts.charts import Bar
+
+def build_ranking_chart(df):
+    """Build horizontal bar chart ranking countries by average temperature"""
+    
+    country_avgs = []
+    
+    for country in country_names:
+        country_data = df[df['Subnational administrative division'] == country]
+        if not country_data.empty:
+            avg_temp = country_data['value'].mean()
+            country_avgs.append({'country': country, 'temp': round(avg_temp, 2)})
+    
+    if not country_avgs:
+        return None
+    
+    # Sort by temperature descending
+    country_avgs = sorted(country_avgs, key=lambda x: x['temp'], reverse=True)
+    
+    countries = [c['country'] for c in country_avgs]
+    temps = [c['temp'] for c in country_avgs]
+    
+    chart = Bar(init_opts=opts.InitOpts(width="800px", height="450px"))
+    chart.add_xaxis(countries)
+    chart.add_yaxis(
+        "Avg Temperature (°C)",
+        temps,
+        itemstyle_opts=opts.ItemStyleOpts(
+            color=JsCode("""
+                function(params) {
+                    var colorList = ['#c23531', '#d48265', '#e69d87', '#eeca69', '#91c7ae', 
+                                     '#749f83', '#6e9ec3', '#5470c6', '#73c0de', '#3ba272'];
+                    return colorList[params.dataIndex % colorList.length];
+                }
+            """)
+        ),
+        label_opts=opts.LabelOpts(is_show=True, position="right", formatter="{c}°C")
+    )
+    
+    chart.reversal_axis()
+    
+    chart.set_global_opts(
+        title_opts=opts.TitleOpts(
+            title="Average Temperature by Country (1960-1990)",
+            subtitle="Central America and Mexico | Source: CEPALSTAT"
+        ),
+        xaxis_opts=opts.AxisOpts(name="Temperature (°C)"),
+        yaxis_opts=opts.AxisOpts(name=""),
+        tooltip_opts=opts.TooltipOpts(trigger="axis"),
+        legend_opts=opts.LegendOpts(is_show=False)
+    )
+    
+    return chart
+
+ranking_chart = build_ranking_chart(df_filtered)
+if ranking_chart:
+    ranking_chart.render_notebook()
+```
+
+---
+
+### Data Source / Fuente de Datos
+
+- **Indicator**: 4470 - Average temperature 1960-2000
+- **Source**: [CEPALSTAT](https://statistics.cepal.org/portal/cepalstat/dashboard.html?indicator_id=4470&area_id=2327&lang=en)
+- **Coverage**: Central America, Mexico, and Caribbean
+- **Unit**: Degrees Celsius (°C)
