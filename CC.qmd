@@ -18,6 +18,9 @@ logging.getLogger().setLevel(logging.WARNING)
 ```{python}
 # Fetch climate change temperature data (indicator 4470: Average temperature 1960-2000)
 df = cepal_data([4470], lang='en')
+#print("DEBUG: Columns in dataframe:", df.columns.tolist())
+#print("DEBUG: Shape:", df.shape)
+#print("DEBUG: First few rows:\n", df.head(10))
 ```
 
 ## Average Temperature by Country (1960-1990) / Temperatura Promedio por País
@@ -31,11 +34,11 @@ Seleccione una pestaña de país para ver los patrones de temperatura mensual pr
 from pyecharts.charts import Line, Tab
 from pyecharts import options as opts
 from pyecharts.commons.utils import JsCode
-from pyecharts.globals import CurrentConfig, NotebookType
+# from pyecharts.globals import CurrentConfig, NotebookType
 
 # Configure PyECharts
-CurrentConfig.ONLINE_HOST = "site_libs/echarts/"
-CurrentConfig.NOTEBOOK_TYPE = NotebookType.JUPYTER_NOTEBOOK
+#CurrentConfig.ONLINE_HOST = "site_libs/echarts/"
+# CurrentConfig.NOTEBOOK_TYPE = NotebookType.JUPYTER_NOTEBOOK
 
 # Month order for sorting
 month_order = {
@@ -52,19 +55,39 @@ else:
 
 df_filtered['value'] = pd.to_numeric(df_filtered['value'], errors='coerce')
 
+# Identify the correct column names by looking for relevant columns
+region_col = None
+month_col = None
+
+for col in df_filtered.columns:
+    col_lower = col.lower()
+    if 'division' in col_lower or 'country' in col_lower or 'area' in col_lower:
+        if region_col is None:
+            region_col = col
+    if 'month' in col_lower:
+        month_col = col
+
+#print(f"DEBUG: Identified region column: {region_col}")
+#print(f"DEBUG: Identified month column: {month_col}")
+
 def build_regional_chart(df, country_name):
     """Build line chart showing regional vs national temperature comparison with interactive legend"""
     
-    if 'Subnational administrative division' not in df.columns or 'Months' not in df.columns:
+    # Use the globally identified column names
+    if region_col is None or month_col is None:
+        print(f"ERROR: Missing required columns. region_col={region_col}, month_col={month_col}")
+        return None
+    
+    if region_col not in df.columns or month_col not in df.columns:
         return None
     
     # Get national level data (exact match)
-    national_data = df[df['Subnational administrative division'] == country_name].copy()
+    national_data = df[df[region_col] == country_name].copy()
     
     # Get all sub-regions for this country
     # Strategy: Find all regions that are not the country name itself
     # We'll use a mapping approach - check which regions belong to which country
-    all_regions_list = df['Subnational administrative division'].unique()
+    all_regions_list = df[region_col].unique()
     
     # Define country-region mappings (based on data structure)
     country_regions_map = {
@@ -109,7 +132,7 @@ def build_regional_chart(df, country_name):
     # Filter actual sub-regions that exist in data
     available_sub_regions = []
     for region in sub_regions:
-        region_data = df[df['Subnational administrative division'] == region]
+        region_data = df[df[region_col] == region]
         if not region_data.empty:
             available_sub_regions.append(region)
     
@@ -135,10 +158,10 @@ def build_regional_chart(df, country_name):
     calculated_national_temps = None
     if len(available_sub_regions) > 0:
         # Collect all sub-region data by month
-        all_regions_data = df[df['Subnational administrative division'].isin(available_sub_regions)].copy()
+        all_regions_data = df[df[region_col].isin(available_sub_regions)].copy()
         if not all_regions_data.empty:
-            calculated_national = all_regions_data.groupby('Months')['value'].mean().reset_index()
-            calculated_national['month_num'] = calculated_national['Months'].map(month_order)
+            calculated_national = all_regions_data.groupby(month_col)['value'].mean().reset_index()
+            calculated_national['month_num'] = calculated_national[month_col].map(month_order)
             calculated_national = calculated_national.sort_values('month_num')
             calculated_national_temps = calculated_national['value'].round(2).tolist()
     
@@ -153,13 +176,13 @@ def build_regional_chart(df, country_name):
         
         # If difference is too large (>3°C), use calculated average
         if diff > 3.0:
-            print(f"  ⚠️  {country_name}: 国家数据与子区域差异较大 ({diff:.2f}°C)，使用子区域计算的平均值")
+            print(f"  ⚠️  {country_name}: National data and sub-regional variations differ considerably. ({diff:.2f}°C)，The average calculated using sub-regions")
             use_calculated = True
             national_temps = calculated_national_temps
         else:
             # Use official national data
-            national_monthly = national_data.groupby('Months')['value'].mean().reset_index()
-            national_monthly['month_num'] = national_monthly['Months'].map(month_order)
+            national_monthly = national_data.groupby(month_col)['value'].mean().reset_index()
+            national_monthly['month_num'] = national_monthly[month_col].map(month_order)
             national_monthly = national_monthly.sort_values('month_num')
             national_temps = national_monthly['value'].round(2).tolist()
     elif calculated_national_temps is not None:
@@ -168,15 +191,17 @@ def build_regional_chart(df, country_name):
         national_temps = calculated_national_temps
     elif not national_data.empty:
         # Only national data available
-        national_monthly = national_data.groupby('Months')['value'].mean().reset_index()
-        national_monthly['month_num'] = national_monthly['Months'].map(month_order)
+        national_monthly = national_data.groupby(month_col)['value'].mean().reset_index()
+        national_monthly['month_num'] = national_monthly[month_col].map(month_order)
         national_monthly = national_monthly.sort_values('month_num')
         national_temps = national_monthly['value'].round(2).tolist()
     else:
         national_temps = None
     
-    if national_temps:
+    if national_temps is not None and len(national_temps) > 0:
         all_temps_list.extend(national_temps)
+        # Keep as simple 1D list - PyEcharts will match with xaxis categories
+        national_temps = [float(x) for x in national_temps]
         
         label_suffix = " (Calculated from Sub-regions)" if use_calculated else " (National Avg)"
         chart.add_yaxis(
@@ -190,22 +215,24 @@ def build_regional_chart(df, country_name):
             label_opts=opts.LabelOpts(
                 is_show=True,
                 position="top",
-                formatter=JsCode("function(params) { return params.value[1].toFixed(1) + '°C'; }")
+                formatter=JsCode("function(params) { return params.value.toFixed(1) + '°C'; }")
             )
         )
     
     # Add sub-regional lines (can be toggled via legend)
     for idx, region in enumerate(available_sub_regions):
-        region_data = df[df['Subnational administrative division'] == region].copy()
+        region_data = df[df[region_col] == region].copy()
         if region_data.empty:
             continue
         
-        monthly_avg = region_data.groupby('Months')['value'].mean().reset_index()
-        monthly_avg['month_num'] = monthly_avg['Months'].map(month_order)
+        monthly_avg = region_data.groupby(month_col)['value'].mean().reset_index()
+        monthly_avg['month_num'] = monthly_avg[month_col].map(month_order)
         monthly_avg = monthly_avg.sort_values('month_num')
         
         temps = monthly_avg['value'].round(2).tolist()
         all_temps_list.extend(temps)
+        # Keep as simple 1D list
+        temps = [float(x) for x in temps]
         color = region_colors[idx % len(region_colors)]
         
         if temps:
@@ -261,7 +288,7 @@ def build_regional_chart(df, country_name):
                     var result = params[0].name + '<br/>';
                     params.forEach(function(item) {
                         result += item.marker + item.seriesName + ': ' + 
-                                  item.value[1].toFixed(1) + '°C<br/>';
+                                  item.value.toFixed(1) + '°C<br/>';
                     });
                     return result;
                 }
@@ -287,13 +314,20 @@ country_names = ['Belize', 'Costa Rica', 'Cuba', 'El Salvador', 'Guatemala',
                  'Haiti', 'Honduras', 'Mexico', 'Panama', 'Dominican Republic']
 
 # Build tabs
+
 tab = Tab()
+
 for country in country_names:
     chart = build_regional_chart(df_filtered, country)
-    if chart:
+    if chart is not None:
         tab.add(chart, country)
 
-tab.render_notebook()
+# Save to file instead of rendering in notebook
+tab.render("charts/temperature_by_region.html")
+```
+
+```{=html}
+<iframe src="charts/temperature_by_region.html" width="100%" height="600px" frameborder="0"></iframe>
 ```
 
 ## Multi-Country Temperature Comparison / Comparación de Temperatura entre Países
@@ -321,19 +355,21 @@ def build_multi_country_line(df):
     chart.add_xaxis(month_labels)
     
     for idx, country in enumerate(country_names):
-        country_data = df_filtered[df_filtered['Subnational administrative division'] == country].copy()
+        country_data = df_filtered[df_filtered[region_col] == country].copy()
         
-        if country_data.empty or 'Months' not in country_data.columns:
+        if country_data.empty or month_col not in country_data.columns:
             continue
         
         # Calculate average by month
-        monthly_avg = country_data.groupby('Months')['value'].mean().reset_index()
-        monthly_avg['month_num'] = monthly_avg['Months'].map(month_order)
+        monthly_avg = country_data.groupby(month_col)['value'].mean().reset_index()
+        monthly_avg['month_num'] = monthly_avg[month_col].map(month_order)
         monthly_avg = monthly_avg.sort_values('month_num')
         
         temps = monthly_avg['value'].round(2).tolist()
         
         if temps:
+            # Keep as simple 1D list
+            temps = [float(x) for x in temps]
             chart.add_yaxis(
                 country,
                 temps,
@@ -370,7 +406,11 @@ def build_multi_country_line(df):
     return chart
 
 line_chart = build_multi_country_line(df_filtered)
-line_chart.render_notebook()
+line_chart.render("charts/temperature_comparison.html")
+```
+
+```{=html}
+<iframe src="charts/temperature_comparison.html" width="100%" height="600px" frameborder="0"></iframe>
 ```
 
 ## Country Ranking by Average Temperature / Ranking de Países por Temperatura Promedio
@@ -389,7 +429,7 @@ def build_ranking_chart(df):
     country_avgs = []
     
     for country in country_names:
-        country_data = df[df['Subnational administrative division'] == country]
+        country_data = df[df[region_col] == country]
         if not country_data.empty:
             avg_temp = country_data['value'].mean()
             country_avgs.append({'country': country, 'temp': round(avg_temp, 2)})
@@ -437,7 +477,11 @@ def build_ranking_chart(df):
 
 ranking_chart = build_ranking_chart(df_filtered)
 if ranking_chart:
-    ranking_chart.render_notebook()
+    ranking_chart.render("charts/temperature_ranking.html")
+```
+
+```{=html}
+<iframe src="charts/temperature_ranking.html" width="100%" height="500px" frameborder="0"></iframe>
 ```
 
 ---

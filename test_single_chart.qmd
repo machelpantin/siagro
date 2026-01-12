@@ -1,0 +1,63 @@
+---
+title: "Test First Chart"
+---
+
+```{python}
+import pandas as pd
+from utils_siagro import cepal_data
+from pyecharts.charts import Line
+from pyecharts import options as opts
+
+# Fetch data
+df = cepal_data([4470], lang='en')
+
+# Filter
+if 'dim_85162' in df.columns:
+    df_filtered = df[df['dim_85162'] == 85163].copy()
+else:
+    df_filtered = df.copy()
+
+df_filtered['value'] = pd.to_numeric(df_filtered['value'], errors='coerce')
+
+# Find columns
+region_col = None
+month_col = None
+
+for col in df_filtered.columns:
+    col_lower = col.lower()
+    if 'division' in col_lower or 'country' in col_lower or 'area' in col_lower:
+        if region_col is None:
+            region_col = col
+    if 'month' in col_lower:
+        month_col = col
+
+print(f"Region column: {region_col}")
+print(f"Month column: {month_col}")
+
+# Create simple chart for Belize
+belize_data = df_filtered[df_filtered[region_col] == 'Belize'].copy()
+print(f"Belize data shape: {belize_data.shape}")
+print(f"Belize data:\n{belize_data.head()}")
+
+# Group by month
+monthly = belize_data.groupby(month_col)['value'].mean().reset_index()
+print(f"\nMonthly data:\n{monthly}")
+
+# Create chart
+chart = Line()
+months = monthly[month_col].tolist()
+temps = monthly['value'].round(2).tolist()
+
+print(f"Months: {months}")
+print(f"Temps: {temps}")
+
+chart.add_xaxis(months)
+chart.add_yaxis("Belize", temps)
+chart.set_global_opts(title_opts=opts.TitleOpts(title="Belize Temperature"))
+chart.render("charts/test_belize.html")
+print("Saved to charts/test_belize.html")
+```
+
+```{=html}
+<iframe src="charts/test_belize.html" width="100%" height="600px" frameborder="0"></iframe>
+```

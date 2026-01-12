@@ -1,0 +1,24 @@
+---
+title: "Simple Chart Test"
+---
+
+```{python}
+from pyecharts.charts import Line
+from pyecharts import options as opts
+
+# Create a simple line chart
+chart = Line()
+chart.add_xaxis(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'])
+chart.add_yaxis('Test Series', [20, 22, 24, 26, 25, 23])
+
+chart.set_global_opts(
+    title_opts=opts.TitleOpts(title="Simple Test Chart"),
+)
+
+chart.render("charts/simple_test.html")
+print("Chart saved to charts/simple_test.html")
+```
+
+```{=html}
+<iframe src="charts/simple_test.html" width="100%" height="600px" frameborder="0"></iframe>
+```

@@ -22,5 +22,14 @@
   },
   "SAN.qmd": {
     "SAN.html": "8aed4d01"
+  },
+  "test_debug.qmd": {
+    "test_debug.html": "93a4d65c"
+  },
+  "test_simple_chart.qmd": {
+    "test_simple_chart.html": "8160bd46"
+  },
+  "test_single_chart.qmd": {
+    "test_single_chart.html": "323fc8ce"
   }
 }

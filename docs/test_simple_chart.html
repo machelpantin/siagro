@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Climate change – Siagro+</title>
+<title>Simple Chart Test – Siagro+</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -114,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Climate data</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./CC.html" aria-current="page"> 
+    <a class="nav-link" href="./CC.html"> 
 <span class="menu-text">Climate change</span></a>
   </li>  
 </ul>
@@ -128,26 +163,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#average-temperature-by-country-1960-1990-temperatura-promedio-por-país" id="toc-average-temperature-by-country-1960-1990-temperatura-promedio-por-país" class="nav-link active" data-scroll-target="#average-temperature-by-country-1960-1990-temperatura-promedio-por-país">Average Temperature by Country (1960-1990) / Temperatura Promedio por País</a></li>
-  <li><a href="#multi-country-temperature-comparison-comparación-de-temperatura-entre-países" id="toc-multi-country-temperature-comparison-comparación-de-temperatura-entre-países" class="nav-link" data-scroll-target="#multi-country-temperature-comparison-comparación-de-temperatura-entre-países">Multi-Country Temperature Comparison / Comparación de Temperatura entre Países</a></li>
-  <li><a href="#country-ranking-by-average-temperature-ranking-de-países-por-temperatura-promedio" id="toc-country-ranking-by-average-temperature-ranking-de-países-por-temperatura-promedio" class="nav-link" data-scroll-target="#country-ranking-by-average-temperature-ranking-de-países-por-temperatura-promedio">Country Ranking by Average Temperature / Ranking de Países por Temperatura Promedio</a>
-  <ul class="collapse">
-  <li><a href="#data-source-fuente-de-datos" id="toc-data-source-fuente-de-datos" class="nav-link" data-scroll-target="#data-source-fuente-de-datos">Data Source / Fuente de Datos</a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Climate change</h1>
+<h1 class="title">Simple Chart Test</h1>
 </div>
 
 
@@ -164,51 +188,28 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Climate change can impact on the production potential of all agricultural sectors though the change in both the levels and variability of climate variables. This section includes data on climate variables at a subnational level based on different climate change scenarios.</p>
-<p>El cambio climático puede afectar el potencial productivo de todos los sectores agrícolas a través del cambio tanto en los niveles como en la variabilidad de las variables climáticas. Esta sección incluye datos sobre variables climáticas a nivel subnacional basados en diferentes escenarios de cambio climático.</p>
-<section id="average-temperature-by-country-1960-1990-temperatura-promedio-por-país" class="level2">
-<h2 class="anchored" data-anchor-id="average-temperature-by-country-1960-1990-temperatura-promedio-por-país">Average Temperature by Country (1960-1990) / Temperatura Promedio por País</h2>
-<p>Select a country tab to view monthly average temperature patterns. Click on different tabs to compare countries.</p>
-<p>Seleccione una pestaña de país para ver los patrones de temperatura mensual promedio. Haga clic en diferentes pestañas para comparar países.</p>
-<div id="c237bb17" class="cell" data-results="asis" data-execution_count="3">
+<div id="36a7efa4" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyecharts.charts <span class="im">import</span> Line</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyecharts <span class="im">import</span> options <span class="im">as</span> opts</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a simple line chart</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>chart <span class="op">=</span> Line()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>chart.add_xaxis([<span class="st">'Jan'</span>, <span class="st">'Feb'</span>, <span class="st">'Mar'</span>, <span class="st">'Apr'</span>, <span class="st">'May'</span>, <span class="st">'Jun'</span>])</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>chart.add_yaxis(<span class="st">'Test Series'</span>, [<span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">24</span>, <span class="dv">26</span>, <span class="dv">25</span>, <span class="dv">23</span>])</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>chart.set_global_opts(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    title_opts<span class="op">=</span>opts.TitleOpts(title<span class="op">=</span><span class="st">"Simple Test Chart"</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>chart.render(<span class="st">"charts/simple_test.html"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Chart saved to charts/simple_test.html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  ⚠️  Dominican Republic: National data and sub-regional variations differ considerably. (7.09°C)，The average calculated using sub-regions</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="18">
-<pre><code>'C:\\Users\\mpantin\\Desktop\\Siagro+\\charts\\temperature_by_region.html'</code></pre>
+<pre><code>Chart saved to charts/simple_test.html</code></pre>
 </div>
 </div>
-<iframe src="charts/temperature_by_region.html" width="100%" height="600px" frameborder="0"></iframe>
-</section>
-<section id="multi-country-temperature-comparison-comparación-de-temperatura-entre-países" class="level2">
-<h2 class="anchored" data-anchor-id="multi-country-temperature-comparison-comparación-de-temperatura-entre-países">Multi-Country Temperature Comparison / Comparación de Temperatura entre Países</h2>
-<p>This interactive chart allows you to compare temperature patterns across multiple countries. Click on country names in the legend to show or hide individual countries.</p>
-<p>Este gráfico interactivo permite comparar los patrones de temperatura entre múltiples países. Haga clic en los nombres de los países en la leyenda para mostrar u ocultar países individuales.</p>
-<div id="0da2859a" class="cell" data-results="asis" data-execution_count="4">
-<div class="cell-output cell-output-display" data-execution_count="19">
-<pre><code>'C:\\Users\\mpantin\\Desktop\\Siagro+\\charts\\temperature_comparison.html'</code></pre>
-</div>
-</div>
-<iframe src="charts/temperature_comparison.html" width="100%" height="600px" frameborder="0"></iframe>
-</section>
-<section id="country-ranking-by-average-temperature-ranking-de-países-por-temperatura-promedio" class="level2">
-<h2 class="anchored" data-anchor-id="country-ranking-by-average-temperature-ranking-de-países-por-temperatura-promedio">Country Ranking by Average Temperature / Ranking de Países por Temperatura Promedio</h2>
-<p>Horizontal bar chart showing annual average temperature by country, sorted from highest to lowest.</p>
-<p>Gráfico de barras horizontal que muestra la temperatura promedio anual por país, ordenado de mayor a menor.</p>
-<iframe src="charts/temperature_ranking.html" width="100%" height="500px" frameborder="0"></iframe>
-<hr>
-<section id="data-source-fuente-de-datos" class="level3">
-<h3 class="anchored" data-anchor-id="data-source-fuente-de-datos">Data Source / Fuente de Datos</h3>
-<ul>
-<li><strong>Indicator</strong>: 4470 - Average temperature 1960-2000</li>
-<li><strong>Source</strong>: <a href="https://statistics.cepal.org/portal/cepalstat/dashboard.html?indicator_id=4470&amp;area_id=2327&amp;lang=en">CEPALSTAT</a></li>
-<li><strong>Coverage</strong>: Central America, Mexico, and Caribbean</li>
-<li><strong>Unit</strong>: Degrees Celsius (°C)</li>
-</ul>
+<iframe src="charts/simple_test.html" width="100%" height="600px" frameborder="0"></iframe>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

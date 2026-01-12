@@ -1,0 +1,17 @@
+---
+title: "Test"
+---
+
+```{python}
+import sys
+import os
+sys.path.insert(0, r'c:\Users\mpantin\Desktop\Siagro+')
+os.chdir(r'c:\Users\mpantin\Desktop\Siagro+')
+
+from utils_siagro import cepal_data
+df = cepal_data([4470], lang='en')
+print("Columns:", df.columns.tolist())
+print("Shape:", df.shape)
+print("\nFirst 5 rows:")
+print(df.head())
+```
