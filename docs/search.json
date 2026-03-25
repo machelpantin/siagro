@@ -23,9 +23,9 @@
   {
     "objectID": "AA.html",
     "href": "AA.html",
-    "title": "Agricultural activities",
+    "title": "Actividad Agropecuaria",
     "section": "",
-    "text": "Agricultural activity refers to the economic aspects of agriculture and includes data on production, prices, international trade, cultivation and yields, exchange rates, economic activity and public spending.\nContent content content"
+    "text": "La actividad agropecuaria se refiere a los aspectos económicos de la agricultura e incluye datos sobre producción, precios, comercio internacional, cultivo y rendimientos, tipos de cambio, actividad económica y gasto público."
   },
   {
     "objectID": "DR.html",
@@ -51,9 +51,9 @@
   {
     "objectID": "CC.html",
     "href": "CC.html",
-    "title": "Climate change",
+    "title": "Cambio climático",
     "section": "",
-    "text": "Climate change can impact on the production potential of all agricultural sectors though the change in both the levels and variability of climate variables. This section includes data on climate variables at a subnational level based on different climate change scenarios.\nEl cambio climático puede afectar el potencial productivo de todos los sectores agrícolas a través del cambio tanto en los niveles como en la variabilidad de las variables climáticas. Esta sección incluye datos sobre variables climáticas a nivel subnacional basados en diferentes escenarios de cambio climático."
+    "text": "El cambio climático puede afectar el potencial productivo de todos los sectores agrícolas a través del cambio tanto en los niveles como en la variabilidad de las variables climáticas. Esta sección incluye datos sobre variables climáticas a nivel subnacional basados en diferentes escenarios de cambio climático."
   },
   {
     "objectID": "CC.html#monthly-details-by-country",
@@ -65,21 +65,21 @@
   {
     "objectID": "CC.html#average-temperature-by-country-1960-1990-temperatura-promedio-por-país",
     "href": "CC.html#average-temperature-by-country-1960-1990-temperatura-promedio-por-país",
-    "title": "Climate change",
+    "title": "Cambio climático",
     "section": "Average Temperature by Country (1960-1990) / Temperatura Promedio por País",
-    "text": "Average Temperature by Country (1960-1990) / Temperatura Promedio por País\nSelect a country tab to view monthly average temperature patterns. Click on different tabs to compare countries.\nSeleccione una pestaña de país para ver los patrones de temperatura mensual promedio. Haga clic en diferentes pestañas para comparar países.\n\n\n  ⚠️  Dominican Republic: National data and sub-regional variations differ considerably. (7.09°C)，The average calculated using sub-regions\n\n\n'C:\\\\Users\\\\mpantin\\\\Desktop\\\\Siagro+\\\\charts\\\\temperature_by_region.html'"
+    "text": "Average Temperature by Country (1960-1990) / Temperatura Promedio por País\nSelect a country tab to view monthly average temperature patterns. Click on different tabs to compare countries.\nSeleccione una pestaña de país para ver los patrones de temperatura mensual promedio. Haga clic en diferentes pestañas para comparar países."
   },
   {
     "objectID": "CC.html#multi-country-temperature-comparison-comparación-de-temperatura-entre-países",
     "href": "CC.html#multi-country-temperature-comparison-comparación-de-temperatura-entre-países",
-    "title": "Climate change",
+    "title": "Cambio climático",
     "section": "Multi-Country Temperature Comparison / Comparación de Temperatura entre Países",
-    "text": "Multi-Country Temperature Comparison / Comparación de Temperatura entre Países\nThis interactive chart allows you to compare temperature patterns across multiple countries. Click on country names in the legend to show or hide individual countries.\nEste gráfico interactivo permite comparar los patrones de temperatura entre múltiples países. Haga clic en los nombres de los países en la leyenda para mostrar u ocultar países individuales.\n\n\n'C:\\\\Users\\\\mpantin\\\\Desktop\\\\Siagro+\\\\charts\\\\temperature_comparison.html'"
+    "text": "Multi-Country Temperature Comparison / Comparación de Temperatura entre Países\nThis interactive chart allows you to compare temperature patterns across multiple countries. Click on country names in the legend to show or hide individual countries.\nEste gráfico interactivo permite comparar los patrones de temperatura entre múltiples países. Haga clic en los nombres de los países en la leyenda para mostrar u ocultar países individuales."
   },
   {
     "objectID": "CC.html#country-ranking-by-average-temperature-ranking-de-países-por-temperatura-promedio",
     "href": "CC.html#country-ranking-by-average-temperature-ranking-de-países-por-temperatura-promedio",
-    "title": "Climate change",
+    "title": "Cambio climático",
     "section": "Country Ranking by Average Temperature / Ranking de Países por Temperatura Promedio",
     "text": "Country Ranking by Average Temperature / Ranking de Países por Temperatura Promedio\nHorizontal bar chart showing annual average temperature by country, sorted from highest to lowest.\nGráfico de barras horizontal que muestra la temperatura promedio anual por país, ordenado de mayor a menor.\n\n\n\nData Source / Fuente de Datos\n\nIndicator: 4470 - Average temperature 1960-2000\nSource: CEPALSTAT\nCoverage: Central America, Mexico, and Caribbean\nUnit: Degrees Celsius (°C)"
   },
@@ -110,5 +110,26 @@
     "title": "Food and nutrition security",
     "section": "",
     "text": "Food and nutrition security refers to not just the supply of food to a population but is also about ensuring availability, stability and access to food. This section contains data on nutritional conditions, availability, access, acceptability, biological utilization and the structural aspects of food and nutrition security."
+  },
+  {
+    "objectID": "CC.html#temperatura-promedio-por-país-1960-1990",
+    "href": "CC.html#temperatura-promedio-por-país-1960-1990",
+    "title": "Cambio climático",
+    "section": "Temperatura Promedio por País (1960-1990)",
+    "text": "Temperatura Promedio por País (1960-1990)\nSeleccione una pestaña de país para ver los patrones de temperatura mensual promedio. Haga clic en diferentes pestañas para comparar países.\n\n! Nota: El gráfico a continuación no funciona por el momento."
+  },
+  {
+    "objectID": "CC.html#comparación-de-temperatura-entre-países",
+    "href": "CC.html#comparación-de-temperatura-entre-países",
+    "title": "Cambio climático",
+    "section": "Comparación de Temperatura entre Países",
+    "text": "Comparación de Temperatura entre Países\nEste gráfico interactivo permite comparar los patrones de temperatura entre múltiples países. Haga clic en los nombres de los países en la leyenda para mostrar u ocultar países individuales."
+  },
+  {
+    "objectID": "CC.html#ranking-de-países-por-temperatura-promedio",
+    "href": "CC.html#ranking-de-países-por-temperatura-promedio",
+    "title": "Cambio climático",
+    "section": "Ranking de Países por Temperatura Promedio",
+    "text": "Ranking de Países por Temperatura Promedio\nGráfico de barras horizontal que muestra la temperatura promedio anual por país, ordenado de mayor a menor.\n\n\n\nData Source / Fuente de Datos\n\nIndicator: 4470 - Temperatura Promedio 1960-2000\nSource: CEPALSTAT\nCoverage: América Central, México y el Caribe\nUnit: Grados Celsius (°C)"
   }
 ]

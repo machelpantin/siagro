@@ -2,6 +2,7 @@
 title: "Cambio climático"
 execute:
   echo: false
+  output: false
 ---
 
 El cambio climático puede afectar el potencial productivo de todos los sectores agrícolas a través del cambio tanto en los niveles como en la variabilidad de las variables climáticas. Esta sección incluye datos sobre variables climáticas a nivel subnacional basados en diferentes escenarios de cambio climático.
@@ -22,11 +23,11 @@ df = cepal_data([4470], lang='en')
 #print("DEBUG: First few rows:\n", df.head(10))
 ```
 
-## Average Temperature by Country (1960-1990) / Temperatura Promedio por País
-
-Select a country tab to view monthly average temperature patterns. Click on different tabs to compare countries.
+## Temperatura Promedio por País (1960-1990)
 
 Seleccione una pestaña de país para ver los patrones de temperatura mensual promedio. Haga clic en diferentes pestañas para comparar países.
+
+>! Nota: El gráfico a continuación no funciona por el momento.
 
 ```{python}
 #| results: asis
@@ -175,7 +176,7 @@ def build_regional_chart(df, country_name):
         
         # If difference is too large (>3°C), use calculated average
         if diff > 3.0:
-            print(f"  ⚠️  {country_name}: National data and sub-regional variations differ considerably. ({diff:.2f}°C)，The average calculated using sub-regions")
+            print(f"  ⚠️  {country_name}: National data and sub-regional variations differ considerably. ({diff:.2f}°C). Using the average calculated using sub-regions")
             use_calculated = True
             national_temps = calculated_national_temps
         else:
@@ -256,19 +257,19 @@ def build_regional_chart(df, country_name):
     
     chart.set_global_opts(
         title_opts=opts.TitleOpts(
-            title=f"Regional vs National: {country_name}",
-            subtitle="Black line = National Average | Colored lines = Sub-regions | Source: CEPALSTAT",
+            title=f"Regional vs Nacional: {country_name}",
+            subtitle="Línea negra = Media nacional | Líneas de color = Subregiones | Fuente: CEPALSTAT",
             title_textstyle_opts=opts.TextStyleOpts(font_size=18, font_weight="bold"),
             pos_left="center"
         ),
         xaxis_opts=opts.AxisOpts(
-            name="Month",
+            name="Mes",
             name_location="middle",
             name_gap=30,
             axislabel_opts=opts.LabelOpts(font_size=11)
         ),
         yaxis_opts=opts.AxisOpts(
-            name="Temperature (°C)",
+            name="Temperaturas (°C)",
             name_location="middle",
             name_gap=50,
             min_=round(y_min),
@@ -326,12 +327,10 @@ tab.render("charts/temperature_by_region.html")
 ```
 
 ```{=html}
-<iframe src="charts/temperature_by_region.html" width="100%" height="600px" frameborder="0"></iframe>
+ <iframe src="charts/temperature_by_region.html" width="100%" height="600px" frameborder="0"></iframe>
 ```
 
-## Multi-Country Temperature Comparison / Comparación de Temperatura entre Países
-
-This interactive chart allows you to compare temperature patterns across multiple countries. Click on country names in the legend to show or hide individual countries.
+## Comparación de Temperatura entre Países
 
 Este gráfico interactivo permite comparar los patrones de temperatura entre múltiples países. Haga clic en los nombres de los países en la leyenda para mostrar u ocultar países individuales.
 
@@ -381,12 +380,14 @@ def build_multi_country_line(df):
     
     chart.set_global_opts(
         title_opts=opts.TitleOpts(
-            title="Monthly Temperature Comparison",
-            subtitle="Click legend to show/hide countries | Source: CEPALSTAT"
+            title="Comparación de temperaturas mensuales",
+            subtitle="Haz clic en la leyenda para mostrar u ocultar los países | Fuente: CEPALSTAT"
         ),
-        xaxis_opts=opts.AxisOpts(name="Month"),
+        xaxis_opts=opts.AxisOpts(name="Mes"),
         yaxis_opts=opts.AxisOpts(
-            name="Temperature (°C)",
+            name="Temperatura (°C)",
+            name_location="middle",
+            name_gap=50,
             min_=15,
             max_=30
         ),
@@ -396,7 +397,7 @@ def build_multi_country_line(df):
         ),
         legend_opts=opts.LegendOpts(
             is_show=True,
-            pos_top="5%",
+            pos_top="10%",
             selected_mode="multiple",
             type_="scroll"
         )
@@ -412,9 +413,7 @@ line_chart.render("charts/temperature_comparison.html")
 <iframe src="charts/temperature_comparison.html" width="100%" height="600px" frameborder="0"></iframe>
 ```
 
-## Country Ranking by Average Temperature / Ranking de Países por Temperatura Promedio
-
-Horizontal bar chart showing annual average temperature by country, sorted from highest to lowest.
+## Ranking de Países por Temperatura Promedio
 
 Gráfico de barras horizontal que muestra la temperatura promedio anual por país, ordenado de mayor a menor.
 
@@ -463,8 +462,8 @@ def build_ranking_chart(df):
     
     chart.set_global_opts(
         title_opts=opts.TitleOpts(
-            title="Average Temperature by Country (1960-1990)",
-            subtitle="Central America and Mexico | Source: CEPALSTAT"
+            title="Temperatura media por país (1960-1990)",
+            subtitle="América Central y México | Fuente: CEPALSTAT"
         ),
         xaxis_opts=opts.AxisOpts(name="Temperature (°C)"),
         yaxis_opts=opts.AxisOpts(name=""),
@@ -487,7 +486,7 @@ if ranking_chart:
 
 ### Data Source / Fuente de Datos
 
-- **Indicator**: 4470 - Average temperature 1960-2000
+- **Indicator**: 4470 - Temperatura Promedio 1960-2000
 - **Source**: [CEPALSTAT](https://statistics.cepal.org/portal/cepalstat/dashboard.html?indicator_id=4470&area_id=2327&lang=en)
-- **Coverage**: Central America, Mexico, and Caribbean
-- **Unit**: Degrees Celsius (°C)
+- **Coverage**: América Central, México y el Caribe
+- **Unit**: Grados Celsius (°C)

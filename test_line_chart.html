@@ -8,11 +8,11 @@
     
 </head>
 <body >
-    <div id="012b31ebd9314d2e8d006e25b4f255dd" class="chart-container" style="width:800px; height:450px; "></div>
+    <div id="3f315cd1d7734080b7894dc0dae4ad28" class="chart-container" style="width:900px; height:550px; "></div>
     <script>
-        var chart_012b31ebd9314d2e8d006e25b4f255dd = echarts.init(
-            document.getElementById('012b31ebd9314d2e8d006e25b4f255dd'), 'white', {renderer: 'canvas'});
-        var option_012b31ebd9314d2e8d006e25b4f255dd = {
+        var chart_3f315cd1d7734080b7894dc0dae4ad28 = echarts.init(
+            document.getElementById('3f315cd1d7734080b7894dc0dae4ad28'), 'white', {renderer: 'canvas'});
+        var option_3f315cd1d7734080b7894dc0dae4ad28 = {
     "animation": true,
     "animationThreshold": 2000,
     "animationDuration": 1000,
@@ -37,54 +37,100 @@
     ],
     "series": [
         {
-            "type": "bar",
-            "name": "Avg Temperature (\u00b0C)",
-            "legendHoverLink": true,
-            "data": [
-                25.03,
-                25.03,
-                24.34,
-                23.9,
-                23.62,
-                23.46,
-                22.11,
-                21.38,
-                20.36,
-                17.16
-            ],
-            "realtimeSort": false,
-            "showBackground": false,
-            "stackStrategy": "samesign",
-            "cursor": "pointer",
-            "barMinHeight": 0,
-            "barCategoryGap": "20%",
-            "barGap": "30%",
-            "large": false,
-            "largeThreshold": 400,
-            "seriesLayoutBy": "column",
-            "datasetIndex": 0,
+            "type": "line",
+            "name": "Belize",
+            "connectNulls": false,
+            "xAxisIndex": 0,
+            "symbol": "circle",
+            "symbolSize": 8,
+            "showSymbol": true,
+            "smooth": true,
             "clip": true,
-            "zlevel": 0,
-            "z": 2,
+            "step": false,
+            "stackStrategy": "samesign",
+            "data": [
+                [
+                    "Jan",
+                    28.1
+                ],
+                [
+                    "Feb",
+                    28.3
+                ],
+                [
+                    "Mar",
+                    28.9
+                ],
+                [
+                    "Apr",
+                    29.2
+                ],
+                [
+                    "May",
+                    29.0
+                ],
+                [
+                    "Jun",
+                    28.5
+                ],
+                [
+                    "Jul",
+                    28.2
+                ],
+                [
+                    "Aug",
+                    28.1
+                ],
+                [
+                    "Sep",
+                    27.9
+                ],
+                [
+                    "Oct",
+                    27.8
+                ],
+                [
+                    "Nov",
+                    28.0
+                ],
+                [
+                    "Dec",
+                    28.1
+                ]
+            ],
+            "hoverAnimation": true,
             "label": {
                 "show": true,
-                "position": "right",
                 "margin": 8,
-                "formatter": "{c}\u00b0C",
                 "valueAnimation": false
             },
+            "logBase": 10,
+            "seriesLayoutBy": "column",
+            "lineStyle": {
+                "show": true,
+                "width": 3,
+                "opacity": 1,
+                "curveness": 0,
+                "type": "solid",
+                "color": "#000000"
+            },
+            "areaStyle": {
+                "opacity": 0
+            },
             "itemStyle": {
-                "color":                 function(params) {                    var colorList = ['#c23531', '#d48265', '#e69d87', '#eeca69', '#91c7ae',                                      '#749f83', '#6e9ec3', '#5470c6', '#73c0de', '#3ba272'];                    return colorList[params.dataIndex % colorList.length];                }            
-            }
+                "color": "#000000"
+            },
+            "zlevel": 0,
+            "z": 0
         }
     ],
     "legend": [
         {
             "data": [
-                "Avg Temperature (\u00b0C)"
+                "Belize"
             ],
             "selected": {},
-            "show": false,
+            "show": true,
             "padding": 5,
             "itemGap": 10,
             "itemWidth": 25,
@@ -107,7 +153,7 @@
     ],
     "tooltip": {
         "show": true,
-        "trigger": "axis",
+        "trigger": "item",
         "triggerOn": "mousemove|click",
         "axisPointer": {
             "type": "line"
@@ -128,38 +174,6 @@
         "order": "seriesAsc"
     },
     "xAxis": [
-        {
-            "name": "Temperature (\u00b0C)",
-            "show": true,
-            "scale": false,
-            "nameLocation": "end",
-            "nameGap": 15,
-            "gridIndex": 0,
-            "inverse": false,
-            "offset": 0,
-            "splitNumber": 5,
-            "minInterval": 0,
-            "splitLine": {
-                "show": true,
-                "lineStyle": {
-                    "show": true,
-                    "width": 1,
-                    "opacity": 1,
-                    "curveness": 0,
-                    "type": "solid"
-                }
-            },
-            "animation": true,
-            "animationThreshold": 2000,
-            "animationDuration": 1000,
-            "animationEasing": "cubicOut",
-            "animationDelay": 0,
-            "animationDurationUpdate": 300,
-            "animationEasingUpdate": "cubicOut",
-            "animationDelayUpdate": 0
-        }
-    ],
-    "yAxis": [
         {
             "show": true,
             "scale": false,
@@ -189,25 +203,59 @@
             "animationEasingUpdate": "cubicOut",
             "animationDelayUpdate": 0,
             "data": [
-                "Belize",
-                "Cuba",
-                "El Salvador",
-                "Haiti",
-                "Honduras",
-                "Costa Rica",
-                "Panama",
-                "Guatemala",
-                "Mexico",
-                "Dominican Republic"
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
             ]
+        }
+    ],
+    "yAxis": [
+        {
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "gridIndex": 0,
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "min": 20,
+            "max": 35,
+            "minInterval": 0,
+            "splitLine": {
+                "show": true,
+                "lineStyle": {
+                    "show": true,
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            },
+            "animation": true,
+            "animationThreshold": 2000,
+            "animationDuration": 1000,
+            "animationEasing": "cubicOut",
+            "animationDelay": 0,
+            "animationDurationUpdate": 300,
+            "animationEasingUpdate": "cubicOut",
+            "animationDelayUpdate": 0
         }
     ],
     "title": [
         {
             "show": true,
-            "text": "Temperatura media por pa\u00eds (1960-1990)",
+            "text": "Test Chart",
             "target": "blank",
-            "subtext": "Am\u00e9rica Central y M\u00e9xico | Fuente: CEPALSTAT",
             "subtarget": "blank",
             "padding": 5,
             "itemGap": 10,
@@ -217,7 +265,7 @@
         }
     ]
 };
-        chart_012b31ebd9314d2e8d006e25b4f255dd.setOption(option_012b31ebd9314d2e8d006e25b4f255dd);
+        chart_3f315cd1d7734080b7894dc0dae4ad28.setOption(option_3f315cd1d7734080b7894dc0dae4ad28);
     </script>
 </body>
 </html>

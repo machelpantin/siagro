@@ -2,6 +2,7 @@
 title: "Seguridad alimentaria y nutricional"
 execute:
   echo: false
+  output: false
 ---
 La seguridad alimentaria y nutricional no se refiere únicamente al suministro de alimentos a la población, sino que también implica garantizar la disponibilidad, la estabilidad y el acceso a los alimentos. Esta sección contiene datos sobre las condiciones nutricionales, la disponibilidad, el acceso, la aceptabilidad, la utilización biológica y los aspectos estructurales de la seguridad alimentaria y nutricional.
 
