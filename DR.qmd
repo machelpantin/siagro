@@ -1,10 +1,10 @@
 ---
-title: "Rural development"
+title: "Desarrollo rural"
 execute:
   echo: false
 ---
-Rural development is directly related to agricultural production since people in rural areas often rely more heavily on agriculture. This section includes data on demographics, education, employment and income, housing and public expenditure and investment
 
+El desarrollo rural está directamente relacionado con la producción agrícola, ya que las personas en las zonas rurales a menudo dependen más de la agricultura. Esta sección incluye datos sobre demografía, educación, empleo e ingresos, vivienda y gasto público e inversión.
 
 
 ```{python}

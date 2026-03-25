@@ -1,6 +1,117 @@
 ---
-title: "Food and nutrition security"
+title: "Seguridad alimentaria y nutricional"
 execute:
   echo: false
 ---
-Food and nutrition security refers to not just the supply of food to a population but is also about ensuring availability, stability and access to food. This section contains data on nutritional conditions, availability, access, acceptability, biological utilization and the structural aspects of food and nutrition security.
+La seguridad alimentaria y nutricional no se refiere únicamente al suministro de alimentos a la población, sino que también implica garantizar la disponibilidad, la estabilidad y el acceso a los alimentos. Esta sección contiene datos sobre las condiciones nutricionales, la disponibilidad, el acceso, la aceptabilidad, la utilización biológica y los aspectos estructurales de la seguridad alimentaria y nutricional.
+
+
+
+```{python}
+#| echo: false
+#| output: false
+import pandas as pd
+#import pyecharts
+from pyecharts.charts import Bar, Grid, Timeline
+from pyecharts import options as opts
+from pyecharts.globals import ThemeType
+
+from utils_siagro import cepal_data #imports from own module
+
+
+df = cepal_data([2808], lang='es') # Import degree of dependency indicator data
+```
+
+```{python}
+#| echo: false
+
+df = df[df['Productos agropecuarios'] != 'Carne caprina'].copy() # Filter out "Carne caprina"
+
+# Convert value to numeric
+df['value'] = pd.to_numeric(df['value'], errors='coerce')
+
+# Get unique years and sort them
+years = sorted(df['Años__ESTANDAR'].unique())
+countries = sorted(df['País__ESTANDAR'].unique())
+products = sorted(df['Productos agropecuarios'].unique())
+
+# Create timeline
+timeline = Timeline(init_opts=opts.InitOpts(width="800px", height="1800px", theme=ThemeType.LIGHT))
+
+# For each year, create a grid of charts (one per country)
+for year in years:
+    # Filter data for this year
+    year_data = df[df['Años__ESTANDAR'] == year]
+    
+    # Create a grid for this year
+    grid = Grid(init_opts=opts.InitOpts(width="800px", height="1800px"))
+    
+    # Calculate grid positions (2 columns x 6 rows for 11 countries)
+    cols = 2
+    chart_width = 50  # percentage
+    chart_height = 14 # percentage
+    h_gap = 3
+    v_gap = 1
+    
+    for idx, country in enumerate(countries):
+        row = idx // cols
+        col = idx % cols
+        
+        # Filter data for this country and year
+        country_data = year_data[year_data['País__ESTANDAR'] == country]
+        
+        # Aggregate by product
+        country_products = country_data.groupby('Productos agropecuarios')['value'].mean().reset_index()
+        
+        # Create values list aligned with products
+        values = []
+        for product in products:
+            product_value = country_products[country_products['Productos agropecuarios'] == product]['value']
+            if len(product_value) > 0:
+                values.append(round(product_value.iloc[0], 2))
+            else:
+                values.append(0)
+        
+        # Calculate position for this chart
+        left = col * (chart_width + h_gap)
+        top = row * (chart_height + v_gap) + 2
+        
+        # Create bar chart for this country
+        bar = (
+            Bar()
+            .add_xaxis(products)
+            .add_yaxis("", values, label_opts=opts.LabelOpts(is_show=False))
+            .set_global_opts(
+                title_opts=opts.TitleOpts(
+                    title=country, 
+                    pos_left=f"{left}%",
+                    pos_top=f"{top - 2}%",
+                    title_textstyle_opts=opts.TextStyleOpts(font_size=12)
+                ),
+                xaxis_opts=opts.AxisOpts(axislabel_opts=opts.LabelOpts(rotate=45, font_size=8)),
+                yaxis_opts=opts.AxisOpts(max_=100, axislabel_opts=opts.LabelOpts(font_size=8)),
+                legend_opts=opts.LegendOpts(is_show=False)
+            )
+        )
+        
+        # Add to grid with calculated position
+        grid.add(bar, grid_opts=opts.GridOpts(pos_left=f"{left}%", pos_top=f"{top}%", width=f"{chart_width}%", height=f"{chart_height-5}%"))
+    
+    # Add this year's grid to timeline
+    timeline.add(grid, str(year))
+
+# Configure timeline
+timeline.add_schema(
+    play_interval=1500,
+    is_auto_play=False,
+    is_timeline_show=True,
+    symbol="circle",
+    symbol_size=10,
+    pos_left="0%",
+    pos_right="0%",
+    pos_bottom="5%"
+)
+
+# Save
+timeline.render_notebook()
+```

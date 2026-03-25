@@ -8,11 +8,11 @@
     
 </head>
 <body >
-    <div id="d6ff42647ede4b67a29ca534f7e57006" class="chart-container" style="width:800px; height:450px; "></div>
+    <div id="ad92e7e3eb744e6696bdbc8770b82bd3" class="chart-container" style="width:800px; height:500px; "></div>
     <script>
-        var chart_d6ff42647ede4b67a29ca534f7e57006 = echarts.init(
-            document.getElementById('d6ff42647ede4b67a29ca534f7e57006'), 'white', {renderer: 'canvas'});
-        var option_d6ff42647ede4b67a29ca534f7e57006 = {
+        var chart_ad92e7e3eb744e6696bdbc8770b82bd3 = echarts.init(
+            document.getElementById('ad92e7e3eb744e6696bdbc8770b82bd3'), 'light', {renderer: 'canvas'});
+        var option_ad92e7e3eb744e6696bdbc8770b82bd3 = {
     "animation": true,
     "animationThreshold": 2000,
     "animationDuration": 1000,
@@ -24,33 +24,18 @@
     "aria": {
         "enabled": false
     },
-    "color": [
-        "#5470c6",
-        "#91cc75",
-        "#fac858",
-        "#ee6666",
-        "#73c0de",
-        "#3ba272",
-        "#fc8452",
-        "#9a60b4",
-        "#ea7ccc"
-    ],
     "series": [
         {
             "type": "bar",
-            "name": "Avg Temperature (\u00b0C)",
+            "name": "Grado de dependencia",
             "legendHoverLink": true,
             "data": [
-                25.03,
-                25.03,
-                24.34,
-                23.9,
-                23.62,
-                23.46,
-                22.11,
-                21.38,
-                20.36,
-                17.16
+                32.91,
+                11.42,
+                7.81,
+                24.07,
+                41.38,
+                92.97
             ],
             "realtimeSort": false,
             "showBackground": false,
@@ -68,23 +53,18 @@
             "z": 2,
             "label": {
                 "show": true,
-                "position": "right",
                 "margin": 8,
-                "formatter": "{c}\u00b0C",
                 "valueAnimation": false
-            },
-            "itemStyle": {
-                "color":                 function(params) {                    var colorList = ['#c23531', '#d48265', '#e69d87', '#eeca69', '#91c7ae',                                      '#749f83', '#6e9ec3', '#5470c6', '#73c0de', '#3ba272'];                    return colorList[params.dataIndex % colorList.length];                }            
             }
         }
     ],
     "legend": [
         {
             "data": [
-                "Avg Temperature (\u00b0C)"
+                "Grado de dependencia"
             ],
             "selected": {},
-            "show": false,
+            "show": true,
             "padding": 5,
             "itemGap": 10,
             "itemWidth": 25,
@@ -107,7 +87,7 @@
     ],
     "tooltip": {
         "show": true,
-        "trigger": "axis",
+        "trigger": "item",
         "triggerOn": "mousemove|click",
         "axisPointer": {
             "type": "line"
@@ -129,7 +109,52 @@
     },
     "xAxis": [
         {
-            "name": "Temperature (\u00b0C)",
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "gridIndex": 0,
+            "axisLabel": {
+                "show": true,
+                "rotate": 45,
+                "margin": 8,
+                "valueAnimation": false
+            },
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
+            "splitLine": {
+                "show": true,
+                "lineStyle": {
+                    "show": true,
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            },
+            "animation": true,
+            "animationThreshold": 2000,
+            "animationDuration": 1000,
+            "animationEasing": "cubicOut",
+            "animationDelay": 0,
+            "animationDurationUpdate": 300,
+            "animationEasingUpdate": "cubicOut",
+            "animationDelayUpdate": 0,
+            "data": [
+                "Arroz",
+                "Carne bovina",
+                "Carne caprina",
+                "Frijol",
+                "Ma\u00edz",
+                "Trigo"
+            ]
+        }
+    ],
+    "yAxis": [
+        {
+            "name": "Porcentaje (%)",
             "show": true,
             "scale": false,
             "nameLocation": "end",
@@ -159,55 +184,11 @@
             "animationDelayUpdate": 0
         }
     ],
-    "yAxis": [
-        {
-            "show": true,
-            "scale": false,
-            "nameLocation": "end",
-            "nameGap": 15,
-            "gridIndex": 0,
-            "inverse": false,
-            "offset": 0,
-            "splitNumber": 5,
-            "minInterval": 0,
-            "splitLine": {
-                "show": true,
-                "lineStyle": {
-                    "show": true,
-                    "width": 1,
-                    "opacity": 1,
-                    "curveness": 0,
-                    "type": "solid"
-                }
-            },
-            "animation": true,
-            "animationThreshold": 2000,
-            "animationDuration": 1000,
-            "animationEasing": "cubicOut",
-            "animationDelay": 0,
-            "animationDurationUpdate": 300,
-            "animationEasingUpdate": "cubicOut",
-            "animationDelayUpdate": 0,
-            "data": [
-                "Belize",
-                "Cuba",
-                "El Salvador",
-                "Haiti",
-                "Honduras",
-                "Costa Rica",
-                "Panama",
-                "Guatemala",
-                "Mexico",
-                "Dominican Republic"
-            ]
-        }
-    ],
     "title": [
         {
             "show": true,
-            "text": "Average Temperature by Country (1960-1990)",
+            "text": "Grado de dependencia de productos agropecuarios",
             "target": "blank",
-            "subtext": "Central America and Mexico | Source: CEPALSTAT",
             "subtarget": "blank",
             "padding": 5,
             "itemGap": 10,
@@ -217,7 +198,7 @@
         }
     ]
 };
-        chart_d6ff42647ede4b67a29ca534f7e57006.setOption(option_d6ff42647ede4b67a29ca534f7e57006);
+        chart_ad92e7e3eb744e6696bdbc8770b82bd3.setOption(option_ad92e7e3eb744e6696bdbc8770b82bd3);
     </script>
 </body>
 </html>

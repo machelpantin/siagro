@@ -1,9 +1,8 @@
 ---
-title: "Agricultural activities"
+title: "Actividad Agropecuaria"
 execute:
   echo: false
 ---
 
-Agricultural activity refers to the economic aspects of agriculture and includes data on production, prices, international trade, cultivation and yields, exchange rates, economic activity and public spending.
+La actividad agropecuaria se refiere a los aspectos económicos de la agricultura e incluye datos sobre producción, precios, comercio internacional, cultivo y rendimientos, tipos de cambio, actividad económica y gasto público.
 
-Content content content
