@@ -7,3 +7,5 @@ execute:
 La actividad agropecuaria se refiere a los aspectos económicos de la agricultura e incluye datos sobre producción, precios, comercio internacional, cultivo y rendimientos, tipos de cambio, actividad económica y gasto público.
 
 >| Nota: Próximamente, gráficos interactivos!
+
+![](http://textfiles.com/underconstruction/mamagnolia_acresunderconstruction.gif)
