@@ -113,6 +113,10 @@ timeline.add_schema(
     pos_bottom="5%"
 )
 
-# Save
-timeline.render_notebook()
+# Save to HTML file
+timeline.render("san_dependency_timeline.html")
+```
+
+```{=html}
+<iframe src="san_dependency_timeline.html" width="100%" height="1900px" frameborder="0"></iframe>
 ```
