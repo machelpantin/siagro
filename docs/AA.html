@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.28">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Actividad Agropecuaria – Siagro+</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -23,7 +26,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -36,10 +39,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-b719d3d4935f2b08311a76135e2bf442.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -67,6 +70,12 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
 
 
 <link rel="stylesheet" href="styles.css">
@@ -154,10 +163,51 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>La actividad agropecuaria se refiere a los aspectos económicos de la agricultura e incluye datos sobre producción, precios, comercio internacional, cultivo y rendimientos, tipos de cambio, actividad económica y gasto público.</p>
-<blockquote class="blockquote">
-<div class="line-block">Nota: Próximamente, gráficos interactivos!</div>
-</blockquote>
-<p><img src="http://textfiles.com/underconstruction/mamagnolia_acresunderconstruction.gif" class="img-fluid"></p>
+<div id="fa74c8b1" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display no-overflow-x" data-execution_count="4">
+
+<div style="margin-bottom: 1em;">
+  <label for="crop-select" style="font-weight:600; margin-right: 8px;">Crop:</label>
+  <select id="crop-select" style="font-size: 1em; padding: 4px 8px;">
+<option value="charts/Bananas.html">Bananas</option>
+<option value="charts/Beans.html">Beans</option>
+<option value="charts/Cabbages.html">Cabbages</option>
+<option value="charts/Cassava.html">Cassava</option>
+<option value="charts/Cocoa_beans.html">Cocoa beans</option>
+<option value="charts/Coffee.html">Coffee</option>
+<option value="charts/Cotton.html">Cotton</option>
+<option value="charts/Cottonseed.html">Cottonseed</option>
+<option value="charts/Grapefruits.html">Grapefruits</option>
+<option value="charts/Lemons.html">Lemons</option>
+<option value="charts/Maize.html">Maize</option>
+<option value="charts/Mangoes.html">Mangoes</option>
+<option value="charts/Melons.html">Melons</option>
+<option value="charts/Onions.html">Onions</option>
+<option value="charts/Oranges.html">Oranges</option>
+<option value="charts/Palm_nuts_and_kernels.html">Palm nuts and kernels</option>
+<option value="charts/Papayas.html">Papayas</option>
+<option value="charts/Peanut.html">Peanut</option>
+<option value="charts/Pineapples.html">Pineapples</option>
+<option value="charts/Plantains.html">Plantains</option>
+<option value="charts/Potatoes.html">Potatoes</option>
+<option value="charts/Rice.html">Rice</option>
+<option value="charts/Sesame_seed.html">Sesame seed</option>
+<option value="charts/Sorghum.html">Sorghum</option>
+<option value="charts/Soya_beans.html">Soya beans</option>
+<option value="charts/Sugar_cane.html">Sugar cane</option>
+<option value="charts/Tomatoes.html">Tomatoes</option>
+<option value="charts/Watermelons.html">Watermelons</option>
+<option value="charts/Wheat.html">Wheat</option>
+  </select>
+</div>
+<iframe id="crop-iframe" src="charts/Bananas.html" width="1050" height="560" style="border:none; display:block;"></iframe>
+<script>
+  document.getElementById('crop-select').addEventListener('change', function() {
+    document.getElementById('crop-iframe').src = this.value;
+  });
+</script>
+</div>
+</div>
 
 
 
@@ -213,13 +263,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

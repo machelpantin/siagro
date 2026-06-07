@@ -1,1 +1,21 @@
+# Quarto
 /.quarto/
+**/*.quarto_ipynb
+_site/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+
+# Generated chart files (built during quarto render)
+charts/
+
+# Render logs and scratch outputs
+render.log
+render_output.txt
+*.html
+!index.qmd
+
+# VS Code
+.vscode/

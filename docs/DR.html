@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.28">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Desarrollo rural – Siagro+</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -23,7 +26,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -36,10 +39,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-b719d3d4935f2b08311a76135e2bf442.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -67,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 
 
@@ -160,24 +163,24 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>El desarrollo rural está directamente relacionado con la producción agrícola, ya que las personas en las zonas rurales a menudo dependen más de la agricultura. Esta sección incluye datos sobre demografía, educación, empleo e ingresos, vivienda y gasto público e inversión.</p>
-<div id="cf285f35" class="cell" data-execution_count="1">
+<div id="34b85b31" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 
 <script>
     require.config({
         paths: {
-            'echarts':'https://assets.pyecharts.org/assets/v5/echarts.min'
+            'echarts':'https://assets.pyecharts.org/assets/v6/echarts.min'
         }
     });
 </script>
 
-        <div id="02ce9e67569f4f1a92cef443191c8376" style="width:900px; height:500px;"></div>
+        <div id="beb44e2d4ffc4943a42e71eb9f7fe17f" style="width:900px; height:500px;"></div>
 
 <script>
         require(['echarts'], function(echarts) {
-                var chart_02ce9e67569f4f1a92cef443191c8376 = echarts.init(
-                    document.getElementById('02ce9e67569f4f1a92cef443191c8376'), 'light', {renderer: 'canvas'});
-                var option_02ce9e67569f4f1a92cef443191c8376 = {
+                var chart_beb44e2d4ffc4943a42e71eb9f7fe17f = echarts.init(
+                    document.getElementById('beb44e2d4ffc4943a42e71eb9f7fe17f'), 'light', {renderer: 'canvas', locale: 'ZH'});
+                var option_beb44e2d4ffc4943a42e71eb9f7fe17f = {
     "baseOption": {
         "series": [
             {
@@ -213,6 +216,7 @@ ul.task-list li input[type="checkbox"] {
                 "label": {
                     "show": false,
                     "margin": 8,
+                    "richInheritPlainLabel": true,
                     "valueAnimation": false
                 }
             },
@@ -249,6 +253,7 @@ ul.task-list li input[type="checkbox"] {
                 "label": {
                     "show": false,
                     "margin": 8,
+                    "richInheritPlainLabel": true,
                     "valueAnimation": false
                 }
             },
@@ -285,6 +290,7 @@ ul.task-list li input[type="checkbox"] {
                 "label": {
                     "show": false,
                     "margin": 8,
+                    "richInheritPlainLabel": true,
                     "valueAnimation": false
                 }
             }
@@ -306,6 +312,7 @@ ul.task-list li input[type="checkbox"] {
                 "show": true,
                 "color": "#333",
                 "margin": 8,
+                "richInheritPlainLabel": true,
                 "valueAnimation": false
             },
             "progress": {},
@@ -348,7 +355,8 @@ ul.task-list li input[type="checkbox"] {
                 "scale": false,
                 "nameLocation": "end",
                 "nameGap": 15,
-                "gridIndex": 0,
+                "nameTruncate": {},
+                "nameMoveOverlap": true,
                 "axisTick": {
                     "show": true,
                     "alignWithLabel": true,
@@ -359,20 +367,19 @@ ul.task-list li input[type="checkbox"] {
                     "rotate": 30,
                     "margin": 8,
                     "fontSize": 10,
+                    "richInheritPlainLabel": true,
                     "valueAnimation": false
                 },
                 "inverse": false,
                 "offset": 0,
                 "splitNumber": 5,
                 "minInterval": 0,
+                "silent": false,
+                "triggerEvent": false,
                 "splitLine": {
                     "show": true,
                     "lineStyle": {
-                        "show": true,
-                        "width": 1,
-                        "opacity": 1,
-                        "curveness": 0,
-                        "type": "solid"
+                        "show": false
                     }
                 },
                 "animation": true,
@@ -404,19 +411,18 @@ ul.task-list li input[type="checkbox"] {
                 "scale": false,
                 "nameLocation": "middle",
                 "nameGap": 40,
-                "gridIndex": 0,
+                "nameTruncate": {},
+                "nameMoveOverlap": true,
                 "inverse": false,
                 "offset": 0,
                 "splitNumber": 5,
                 "minInterval": 0,
+                "silent": false,
+                "triggerEvent": false,
                 "splitLine": {
                     "show": true,
                     "lineStyle": {
-                        "show": true,
-                        "width": 1,
-                        "opacity": 1,
-                        "curveness": 0,
-                        "type": "solid"
+                        "show": false
                     }
                 },
                 "animation": true,
@@ -459,7 +465,8 @@ ul.task-list li input[type="checkbox"] {
                 "selector": false,
                 "selectorPosition": "auto",
                 "selectorItemGap": 7,
-                "selectorButtonGap": 10
+                "selectorButtonGap": 10,
+                "triggerEvent": false
             }
         ]
     },
@@ -495,7 +502,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -532,6 +540,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -568,6 +577,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -604,6 +614,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -615,7 +626,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -626,20 +638,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -671,19 +682,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -730,24 +740,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -780,7 +781,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -817,6 +819,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -853,6 +856,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -889,6 +893,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -900,7 +905,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -911,20 +917,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -956,19 +961,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -1015,24 +1019,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -1065,7 +1060,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -1102,6 +1098,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -1138,6 +1135,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -1174,6 +1172,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -1185,7 +1184,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -1196,20 +1196,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -1241,19 +1240,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -1300,24 +1298,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -1350,7 +1339,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -1387,6 +1377,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -1423,6 +1414,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -1459,6 +1451,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -1470,7 +1463,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -1481,20 +1475,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -1526,19 +1519,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -1585,24 +1577,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -1635,7 +1618,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -1672,6 +1656,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -1708,6 +1693,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -1744,6 +1730,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -1755,7 +1742,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -1766,20 +1754,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -1811,19 +1798,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -1870,24 +1856,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -1920,7 +1897,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -1957,6 +1935,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -1993,6 +1972,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -2029,6 +2009,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -2040,7 +2021,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -2051,20 +2033,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -2096,19 +2077,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -2155,24 +2135,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -2205,7 +2176,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -2242,6 +2214,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -2278,6 +2251,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -2314,6 +2288,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -2325,7 +2300,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -2336,20 +2312,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -2381,19 +2356,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -2440,24 +2414,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -2490,7 +2455,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -2527,6 +2493,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -2563,6 +2530,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -2599,6 +2567,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -2610,7 +2579,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -2621,20 +2591,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -2666,19 +2635,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -2725,24 +2693,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -2775,7 +2734,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -2812,6 +2772,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -2848,6 +2809,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -2884,6 +2846,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -2895,7 +2858,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -2906,20 +2870,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -2951,19 +2914,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -3010,24 +2972,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -3060,7 +3013,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -3097,6 +3051,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -3133,6 +3088,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -3169,6 +3125,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -3180,7 +3137,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -3191,20 +3149,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -3236,19 +3193,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -3295,24 +3251,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -3345,7 +3292,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -3382,6 +3330,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -3418,6 +3367,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -3454,6 +3404,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -3465,7 +3416,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -3476,20 +3428,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -3521,19 +3472,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -3580,24 +3530,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -3630,7 +3571,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -3667,6 +3609,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -3703,6 +3646,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -3739,6 +3683,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -3750,7 +3695,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -3761,20 +3707,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -3806,19 +3751,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -3865,24 +3809,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -3915,7 +3850,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -3952,6 +3888,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -3988,6 +3925,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -4024,6 +3962,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -4035,7 +3974,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -4046,20 +3986,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -4091,19 +4030,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -4150,24 +4088,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -4200,7 +4129,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -4237,6 +4167,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -4273,6 +4204,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -4309,6 +4241,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -4320,7 +4253,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -4331,20 +4265,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -4376,19 +4309,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -4435,24 +4367,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -4485,7 +4408,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -4522,6 +4446,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -4558,6 +4483,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -4594,6 +4520,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -4605,7 +4532,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -4616,20 +4544,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -4661,19 +4588,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -4720,24 +4646,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -4770,7 +4687,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -4807,6 +4725,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -4843,6 +4762,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -4879,6 +4799,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -4890,7 +4811,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -4901,20 +4823,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -4946,19 +4867,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -5005,24 +4925,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -5055,7 +4966,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -5092,6 +5004,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -5128,6 +5041,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -5164,6 +5078,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -5175,7 +5090,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -5186,20 +5102,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -5231,19 +5146,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -5290,24 +5204,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -5340,7 +5245,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -5377,6 +5283,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -5413,6 +5320,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -5449,6 +5357,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -5460,7 +5369,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -5471,20 +5381,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -5516,19 +5425,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -5575,24 +5483,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -5625,7 +5524,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -5662,6 +5562,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -5698,6 +5599,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -5734,6 +5636,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -5745,7 +5648,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -5756,20 +5660,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -5801,19 +5704,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -5860,24 +5762,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -5910,7 +5803,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -5947,6 +5841,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -5983,6 +5878,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -6019,6 +5915,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -6030,7 +5927,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -6041,20 +5939,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -6086,19 +5983,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -6145,24 +6041,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -6195,7 +6082,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -6232,6 +6120,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -6268,6 +6157,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -6304,6 +6194,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -6315,7 +6206,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -6326,20 +6218,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -6371,19 +6262,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -6430,24 +6320,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -6480,7 +6361,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -6517,6 +6399,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -6553,6 +6436,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -6589,6 +6473,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -6600,7 +6485,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -6611,20 +6497,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -6656,19 +6541,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -6715,24 +6599,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -6765,7 +6640,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -6802,6 +6678,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -6838,6 +6715,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -6874,6 +6752,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -6885,7 +6764,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -6896,20 +6776,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -6941,19 +6820,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -7000,24 +6878,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -7050,7 +6919,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -7087,6 +6957,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -7123,6 +6994,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -7159,6 +7031,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -7170,7 +7043,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -7181,20 +7055,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -7226,19 +7099,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -7285,24 +7157,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -7335,7 +7198,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -7372,6 +7236,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -7408,6 +7273,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -7444,6 +7310,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -7455,7 +7322,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -7466,20 +7334,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -7511,19 +7378,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -7570,24 +7436,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -7620,7 +7477,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -7657,6 +7515,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -7693,6 +7552,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -7729,6 +7589,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -7740,7 +7601,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -7751,20 +7613,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -7796,19 +7657,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -7855,24 +7715,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -7905,7 +7756,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -7942,6 +7794,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -7978,6 +7831,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -8014,6 +7868,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -8025,7 +7880,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -8036,20 +7892,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -8081,19 +7936,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -8140,24 +7994,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -8190,7 +8035,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -8227,6 +8073,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -8263,6 +8110,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -8299,6 +8147,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -8310,7 +8159,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -8321,20 +8171,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -8366,19 +8215,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -8425,24 +8273,15 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         },
         {
             "legend": [
@@ -8475,7 +8314,8 @@ ul.task-list li input[type="checkbox"] {
                     "selector": false,
                     "selectorPosition": "auto",
                     "selectorItemGap": 7,
-                    "selectorButtonGap": 10
+                    "selectorButtonGap": 10,
+                    "triggerEvent": false
                 }
             ],
             "series": [
@@ -8512,6 +8352,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -8548,6 +8389,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 },
@@ -8584,6 +8426,7 @@ ul.task-list li input[type="checkbox"] {
                     "label": {
                         "show": false,
                         "margin": 8,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     }
                 }
@@ -8595,7 +8438,8 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "end",
                     "nameGap": 15,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "axisTick": {
                         "show": true,
                         "alignWithLabel": true,
@@ -8606,20 +8450,19 @@ ul.task-list li input[type="checkbox"] {
                         "rotate": 30,
                         "margin": 8,
                         "fontSize": 10,
+                        "richInheritPlainLabel": true,
                         "valueAnimation": false
                     },
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -8651,19 +8494,18 @@ ul.task-list li input[type="checkbox"] {
                     "scale": false,
                     "nameLocation": "middle",
                     "nameGap": 40,
-                    "gridIndex": 0,
+                    "nameTruncate": {},
+                    "nameMoveOverlap": true,
                     "inverse": false,
                     "offset": 0,
                     "splitNumber": 5,
                     "minInterval": 0,
+                    "silent": false,
+                    "triggerEvent": false,
                     "splitLine": {
                         "show": true,
                         "lineStyle": {
-                            "show": true,
-                            "width": 1,
-                            "opacity": 1,
-                            "curveness": 0,
-                            "type": "solid"
+                            "show": false
                         }
                     },
                     "animation": true,
@@ -8710,28 +8552,19 @@ ul.task-list li input[type="checkbox"] {
                 "confine": false,
                 "appendToBody": false,
                 "transitionDuration": 0.4,
+                "displayTransition": true,
                 "textStyle": {
-                    "fontSize": 14
+                    "fontSize": 14,
+                    "richInheritPlainLabel": true
                 },
                 "borderWidth": 0,
                 "padding": 5,
                 "order": "seriesAsc"
-            },
-            "color": [
-                "#5470c6",
-                "#91cc75",
-                "#fac858",
-                "#ee6666",
-                "#73c0de",
-                "#3ba272",
-                "#fc8452",
-                "#9a60b4",
-                "#ea7ccc"
-            ]
+            }
         }
     ]
 };
-                chart_02ce9e67569f4f1a92cef443191c8376.setOption(option_02ce9e67569f4f1a92cef443191c8376);
+                chart_beb44e2d4ffc4943a42e71eb9f7fe17f.setOption(option_beb44e2d4ffc4943a42e71eb9f7fe17f);
         });
     </script>
 </div>
@@ -8791,13 +8624,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

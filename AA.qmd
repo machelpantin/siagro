@@ -6,6 +6,149 @@ execute:
 
 La actividad agropecuaria se refiere a los aspectos económicos de la agricultura e incluye datos sobre producción, precios, comercio internacional, cultivo y rendimientos, tipos de cambio, actividad económica y gasto público.
 
->| Nota: Próximamente, gráficos interactivos!
+```{python}
+import pandas as pd
+import os
+from utils_siagro import cepal_data
+from pyecharts import options as opts
+from pyecharts.charts import Scatter, Timeline, Grid
+from pyecharts.commons.utils import JsCode
+from IPython.display import HTML
+import logging
+logging.getLogger().setLevel(logging.WARNING)
+```
 
-![under construction](http://textfiles.com/underconstruction/mamagnolia_acresunderconstruction.gif)
+```{python}
+df = cepal_data([2725, 2765], lang='en')
+```
+
+```{python}
+df2 = df.copy()
+df2["value"] = pd.to_numeric(df2["value"], errors="coerce")
+
+colors = [
+    "#5470c6", "#91cc75", "#fac858", "#ee6666", "#73c0de",
+    "#3ba272", "#fc8452", "#9a60b4", "#ea7ccc", "#d14a61", "#2ec7c9",
+]
+countries = sorted(df2["Country__ESTANDAR"].unique())
+color_map = {c: colors[i] for i, c in enumerate(countries)}
+products = sorted(df2["Agricultural product"].unique())
+
+os.makedirs("charts", exist_ok=True)
+
+for product in products:
+    df_prod = (
+        df2[df2["Agricultural product"] == product]
+        [["Country__ESTANDAR", "Years__ESTANDAR", "indicator_name", "value"]]
+        .pivot_table(
+            index=["Country__ESTANDAR", "Years__ESTANDAR"],
+            columns="indicator_name",
+            values="value",
+            aggfunc="mean",
+        )
+        .reset_index()
+    )
+    df_prod.columns.name = None
+    df_prod.columns = ["country", "year", "area", "yield"]
+    df_prod = df_prod.dropna(subset=["area", "yield"])
+    df_prod["year"] = df_prod["year"].astype(str)
+
+    years = sorted(df_prod["year"].unique())
+
+    tl = Timeline(init_opts=opts.InitOpts(width="1000px", height="520px"))
+    tl.add_schema(play_interval=800, is_auto_play=False)
+
+    for year in years:
+        df_year = df_prod[df_prod["year"] == year].set_index("country")
+        scatter = Scatter()
+        scatter.add_xaxis([])
+
+        for country in countries:
+            if country in df_year.index:
+                row = df_year.loc[country]
+                scatter.add_yaxis(
+                    series_name=country,
+                    y_axis=[[round(float(row["area"]), 3), round(float(row["yield"]), 3)]],
+                    label_opts=opts.LabelOpts(is_show=False),
+                    symbol_size=12,
+                    itemstyle_opts=opts.ItemStyleOpts(color=color_map[country]),
+                )
+            else:
+                scatter.add_yaxis(
+                    series_name=country,
+                    y_axis=[],
+                    label_opts=opts.LabelOpts(is_show=False),
+                    symbol_size=12,
+                    itemstyle_opts=opts.ItemStyleOpts(color=color_map[country]),
+                )
+
+        scatter.set_global_opts(
+            title_opts=opts.TitleOpts(
+                title=f"{product} — Yield vs Area Harvested",
+                subtitle=f"Year: {year}",
+            ),
+            xaxis_opts=opts.AxisOpts(
+                name="Area Harvested (Thousands of hectares)",
+                name_location="middle",
+                name_gap=35,
+                type_="value",
+                splitline_opts=opts.SplitLineOpts(is_show=True),
+            ),
+            yaxis_opts=opts.AxisOpts(
+                name="Yield (Tons per hectare)",
+                name_location="middle",
+                name_gap=50,
+                type_="value",
+                splitline_opts=opts.SplitLineOpts(is_show=True),
+            ),
+            legend_opts=opts.LegendOpts(
+                pos_left="80%",
+                pos_top="20%",
+                orient="vertical",
+            ),
+            tooltip_opts=opts.TooltipOpts(
+                trigger="item",
+                formatter=JsCode(
+                    "function(p){"
+                    "return p.seriesName"
+                    " + '<br/>Area Harvested: ' + p.data[0]"
+                    " + '<br/>Yield: ' + p.data[1];}"
+                ),
+            ),
+        )
+
+        grid = Grid().add(scatter, grid_opts=opts.GridOpts(pos_right="22%"))
+        tl.add(grid, year)
+
+    safe = product.replace(" ", "_").replace("/", "_")
+    tl.render(f"charts/{safe}.html")
+```
+
+```{python}
+options_html = "\n".join(
+    f'<option value="charts/{p.replace(" ", "_").replace("/", "_")}.html">{p}</option>'
+    for p in products
+)
+
+first = products[0].replace(" ", "_").replace("/", "_")
+
+HTML(f"""
+<div style="margin-bottom: 1em;">
+  <label for="crop-select" style="font-weight:600; margin-right: 8px;">Crop:</label>
+  <select id="crop-select" style="font-size: 1em; padding: 4px 8px;">
+{options_html}
+  </select>
+</div>
+<iframe id="crop-iframe"
+  src="charts/{first}.html"
+  width="1050"
+  height="560"
+  style="border:none; display:block;"
+></iframe>
+<script>
+  document.getElementById('crop-select').addEventListener('change', function() {{
+    document.getElementById('crop-iframe').src = this.value;
+  }});
+</script>
+""")
+```
